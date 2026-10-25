@@ -22,4 +22,8 @@ jobs:
       - run: pnpm test
       - name: The tag matches package.json
         run: test "v$(node -p 'require("./package.json").version')" = "${GITHUB_REF_NAME}"
-      - run: npm publish --provenance --access public
+      - name: Publish unless this version is already on npm (0.1.0 was published by hand)
+        run: |
+          v=$(node -p 'require("./package.json").version')
+          if npm view "shortform-breakdown@$v" version >/dev/null 2>&1; then echo "shortform-breakdown@$v is already published"; exit 0; fi
+          npm publish --provenance --access public
