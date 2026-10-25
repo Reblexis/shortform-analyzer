@@ -33,7 +33,7 @@ Imports: Layer 3 and the label sets come from `shortform-breakdown` (stable, sem
 ## The data flow
 
 ```
-input (path | Buffer | TikTok URL)
+input (path | Buffer)
   │ resolveInput
   ▼
 video file ──probe──▶ { duration, audio }

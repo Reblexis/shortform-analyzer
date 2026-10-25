@@ -60,7 +60,7 @@ const texts = alignWords((await transcribe(await extractAudio("talk.mp4"))).word
 
 | Export | Layer | Does |
 | --- | --- | --- |
-| `resolveInput(input, options?)` | 1 | Path, Buffer or TikTok URL → `{ path, cleanup() }`. Buffers and downloads go to a temp file that `cleanup` removes |
+| `resolveInput(input)` | 1 | Path or Buffer → `{ path, cleanup() }`. A Buffer goes to a temp file that `cleanup` removes. Any URL is refused |
 | `probe(video, options?)` | 1 | `{ duration, audio }` |
 | `detectScenes(video, options?)` | 1 | `Span[]`. Options: `duration`, `threshold` 0.3, `minScene` 0.4, `maxTake` 5, `maxScenes` 40 |
 | `grabFrame(video, t, side?)` | 1 | One JPEG Buffer at `t` seconds, long side at most `side` px (512) |
@@ -88,10 +88,9 @@ Internal helpers (`run`, `parseCuts`, `buildScenes`, `splitLong`, `capScenes`, `
 
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `input` | string or Buffer | yes | A local file path, the video's bytes, or a TikTok post URL (`https://www.tiktok.com/@<user>/video/<id>`). Any other URL fails with "download the video first and pass the file" |
+| `input` | string or Buffer | yes | A local file path or the video's bytes. A URL fails with "download the video first and pass the file" |
 | `options.openaiApiKey` | string | no | Default: env `OPENAI_API_KEY`. |
 | `options.openaiBaseUrl` | string | no | Default: env `OPENAI_BASE_URL`, else `https://api.openai.com/v1` |
-| `options.apinoaApiKey` | string | no | Default: env `APINOA_API_KEY`. Needed only for URL input |
 | `options.questions` | Question[] | no | Up to 20. |
 | `options.ffmpegPath` | string | no | Default: `ffmpeg` |
 | `options.ffprobePath` | string | no | Default: `ffprobe` |
@@ -99,7 +98,7 @@ Internal helpers (`run`, `parseCuts`, `buildScenes`, `splitLong`, `capScenes`, `
 
 `Question` is `{ name, question }`. `name` is unique and matches `[a-z0-9_]+`. `question` is a yes/no question about what is in the video. Layer 2 turns each one into the video-scope predicate `q_<name>`. A caller who wants a question per scene, or a choice or score question, uses `decide` from `primitives` instead.
 
-The `primitives` functions take the same `openaiApiKey`, `openaiBaseUrl`, `apinoaApiKey`, `ffmpegPath`, `ffprobePath` and `fetch` options, with the same defaults, wherever they apply.
+The `primitives` functions take the same `openaiApiKey`, `openaiBaseUrl`, `ffmpegPath`, `ffprobePath` and `fetch` options, with the same defaults, wherever they apply.
 
 ```json
 {
@@ -204,12 +203,12 @@ Illustrative values, not a real video:
 ### CLI
 
 ```
-npx shortform-breakdown analyze <file-or-tiktok-url> [--out <dir>] [--question name="question"]... [--json]
-npx shortform-breakdown screen  <file-or-tiktok-url> --question name="question"...
+npx shortform-breakdown analyze <file> [--out <dir>] [--question name="question"]... [--json]
+npx shortform-breakdown screen  <file> --question name="question"...
 npx shortform-breakdown mcp
 ```
 
-- `analyze` writes to `--out`. The default is `<file>.breakdown/`, or `./<post id>.breakdown/` for a URL. It writes:
+- `analyze` writes to `--out`. The default is `<file>.breakdown/`. It writes:
   - `analysis.json`;
   - `report.html`;
   - `frames/01.jpg` and onwards: the 512 px frames the model saw;
@@ -224,7 +223,7 @@ npx shortform-breakdown mcp
 
 | Tool | Input | Returns |
 | --- | --- | --- |
-| `analyze_video` | `input` (a path or TikTok URL), `questions` (optional) | The `summarize()` text, the output folder path, and the analysis without thumbnails (base64 wastes the model's context) |
+| `analyze_video` | `input` (a file path), `questions` (optional) | The `summarize()` text, the output folder path, and the analysis without thumbnails (base64 wastes the model's context) |
 | `screen_video` | `input`, `questions` | production, voice, answers |
 
 Setup lines for Claude Code, Claude Desktop and Cursor are in the README.
@@ -233,7 +232,7 @@ Setup lines for Claude Code, Claude Desktop and Cursor are in the README.
 
 `skills/shortform-breakdown/SKILL.md` uses the Agent Skills format: `name` and `description` frontmatter, then the body. The body covers:
 - when to use it: someone wants to know why a short video works, or how to borrow its structure;
-- the command: `npx shortform-breakdown analyze <file-or-url>`;
+- the command: `npx shortform-breakdown analyze <file>`;
 - reading the summary, and opening `sheet.jpg` to see the frames;
 - what the labels mean (link the tables in `docs/video-analysis.md`);
 - keys and costs.
@@ -253,8 +252,7 @@ Each row is pinned by a test in `tests/`.
 | 5 | Missing or refused answers | A two-scene Decisions reply where `beat_1` is a refusal and `lever_1` and `hold_1` are missing | Scene 2: beat `value`, lever `none`, hold 2. Scene 1 keeps its answers |
 | 6 | No OpenAI key | Example 1 with an empty key | ok false. The error names `OPENAI_API_KEY`. No network call |
 | 7 | Unreadable file | A path that does not exist (`/nope.mp4`) | ok false. The error starts with "video:" |
-| 8 | TikTok URL without an apinoa key | `https://www.tiktok.com/@<user>/video/<id>` with no `APINOA_API_KEY` | ok false. The error names `APINOA_API_KEY`. No request made |
-| 9 | Unsupported URL | `https://example.com/video.mp4` | ok false. The error says to download the video and pass the file |
+| 9 | A URL | `https://example.com/video.mp4` | ok false. The error says to download the video and pass the file |
 | 10 | 25 questions | Example 1 with 25 questions | ok false. The error says the maximum is 20 |
 | 14 | A scene question of your own | `decide` on Example 1's evidence with one predicate `logo`, scope `scene`, "Is a logo visible in scene {scene}?" | The request holds `logo_0`, `logo_1`, `logo_2`, their instructions name scenes 1, 2 and 3. `scenes[i].logo.probability` comes back per scene |
 | 15 | Too many questions | `decide` on a 40-scene evidence with 11 scene-scope questions (440 after expansion) | Throws, the message starts with "decide:" and says 400. No network call |

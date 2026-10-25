@@ -69,13 +69,13 @@ await writeFile("report.html", reportHtml(a));   // one self-contained page
 
 | Export | Does |
 | --- | --- |
-| `analyzeVideo(input, options?)` | The full analysis. `input` is a file path, a `Buffer`, or a TikTok post URL |
+| `analyzeVideo(input, options?)` | The full analysis. `input` is a file path or a `Buffer` |
 | `screenVideo(input, questions, options?)` | A quick check from 3 frames (15, 50, 85 percent) and one request: production, voice and your questions |
 | `screenCover(image, questions, options?)` | The same from one cover image, before any download |
 | `summarize(analysis)` | Format, goal, scene count, production, then one line per section |
 | `reportHtml(analysis, title?)` | A self-contained HTML page: the beat strip, then one row per scene |
 
-Options: `openaiApiKey` (default `OPENAI_API_KEY`), `openaiBaseUrl` (default `OPENAI_BASE_URL`, else `https://api.openai.com/v1`; Azure OpenAI works through it), `apinoaApiKey` (default `APINOA_API_KEY`, for TikTok URLs), `questions` (up to 20), `ffmpegPath`, `ffprobePath`, `fetch`.
+Options: `openaiApiKey` (default `OPENAI_API_KEY`), `openaiBaseUrl` (default `OPENAI_BASE_URL`, else `https://api.openai.com/v1`; Azure OpenAI works through it), `questions` (up to 20), `ffmpegPath`, `ffprobePath`, `fetch`.
 
 The output's fields are in [docs/reference.md](docs/reference.md#output) and in [`schema/analysis.schema.json`](schema/analysis.schema.json) (`schemaVersion: 1`).
 
@@ -84,7 +84,6 @@ The output's fields are in [docs/reference.md](docs/reference.md#output) and in 
 ```bash
 npx shortform-breakdown analyze clip.mp4
 npx shortform-breakdown analyze clip.mp4 --question face="Is a person's face on camera?" --json
-npx shortform-breakdown analyze https://www.tiktok.com/@user/video/7400000000000000000 --out ./breakdown
 npx shortform-breakdown screen clip.mp4 --question face="Is a person's face on camera?"
 ```
 
@@ -112,7 +111,7 @@ Claude Desktop, Cursor and other clients:
     "shortform-breakdown": {
       "command": "npx",
       "args": ["-y", "shortform-breakdown", "mcp"],
-      "env": { "OPENAI_API_KEY": "sk-...", "APINOA_API_KEY": "optional, for TikTok URLs" }
+      "env": { "OPENAI_API_KEY": "sk-..." }
     }
   }
 }
@@ -120,7 +119,7 @@ Claude Desktop, Cursor and other clients:
 
 | Tool | Input | Returns |
 | --- | --- | --- |
-| `analyze_video` | `input` (a path or TikTok URL), `questions` (optional) | The summary, the output folder, and the analysis without thumbnails |
+| `analyze_video` | `input` (a file path), `questions` (optional) | The summary, the output folder, and the analysis without thumbnails |
 | `screen_video` | `input`, `questions` | production, voice, answers |
 
 ## Agent skill
@@ -183,13 +182,12 @@ When the model refuses or skips an answer: beat `value`, lever `none`, hold 2, f
 ## Keys and costs
 
 - **OpenAI** (`OPENAI_API_KEY`): one `whisper-1` transcription and one Decisions request (`gpt-6-luna`) per video. About 15 seconds per video.
-- **apinoa** (`APINOA_API_KEY`), only for TikTok URLs: `tiktok/media` costs 2 units ($0.002) per video and takes about 3 seconds.
 
-No telemetry. Your keys go only to OpenAI and, for URLs, to apinoa.
+No telemetry. Your key goes only to OpenAI.
 
-## TikTok URLs through apinoa
+## Input is a video file
 
-Pass `https://www.tiktok.com/@<user>/video/<id>` and the video is downloaded through [apinoa](https://apinoa.com/?ref=shortform-breakdown) with `@apinoa/sdk`. Get a key at apinoa.com. Any other URL is refused: download the video first and pass the file. There is no scraper and no bundled yt-dlp.
+Pass a file path or the video's bytes. A URL is refused: download the video first and pass the file.
 
 ## Use videos you have the right to use
 

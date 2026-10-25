@@ -15,7 +15,7 @@ export async function screenVideo(input: string | Buffer, questions: Question[],
   const ff = { ffmpegPath: options.ffmpegPath, ffprobePath: options.ffprobePath };
   let resolved;
   try {
-    resolved = await resolveInput(input, options);
+    resolved = await resolveInput(input);
   } catch (e) {
     return fail(e);
   }

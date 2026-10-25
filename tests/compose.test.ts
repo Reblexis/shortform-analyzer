@@ -64,8 +64,12 @@ describe("layer rules", () => {
     }
   });
 
-  it("the main entry does not load the MCP SDK or the apinoa SDK", () => {
-    for (const f of ["index.ts", "primitives.ts"]) expect(readFileSync(join("src", f), "utf8"), f).not.toMatch(/modelcontextprotocol|@apinoa/);
-    expect(readFileSync("src/blocks/input.ts", "utf8")).toMatch(/await import\("\.\/fetch\.js"\)/);
+  it("the main entry does not load the MCP SDK", () => {
+    for (const f of ["index.ts", "primitives.ts"]) expect(readFileSync(join("src", f), "utf8"), f).not.toMatch(/modelcontextprotocol/);
+  });
+
+  it("does not depend on apinoa", () => {
+    const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+    expect(Object.keys({ ...pkg.dependencies, ...pkg.optionalDependencies })).not.toContain("@apinoa/sdk");
   });
 });

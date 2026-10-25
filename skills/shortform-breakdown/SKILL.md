@@ -7,21 +7,20 @@ description: Break down a short-form video (TikTok, Reels, Shorts) scene by scen
 
 ## When to use it
 
-Someone hands you a short video (a file, or a TikTok post URL) and asks why it works, what its
+Someone hands you a short video (a file) and asks why it works, what its
 hook is, how it is structured, or how to make one like it. Also for checking a video against
 yes/no questions ("is a face on camera?", "is it a screen recording?").
 
 ## Run it
 
 ```bash
-npx shortform-breakdown analyze <file-or-tiktok-url>
+npx shortform-breakdown analyze <file>
 npx shortform-breakdown analyze clip.mp4 --question face="Is a person's face on camera at any point?"
 npx shortform-breakdown screen clip.mp4 --question face="Is a person's face on camera?"   # 3 frames, one request
 ```
 
-Needs `ffmpeg` and `ffprobe` on PATH and `OPENAI_API_KEY`. A TikTok URL
-(`https://www.tiktok.com/@<user>/video/<id>`) also needs `APINOA_API_KEY` (https://apinoa.com);
-for any other site, download the video first and pass the file. It takes about 15 seconds.
+Needs `ffmpeg` and `ffprobe` on PATH and `OPENAI_API_KEY`. It takes a video file, not a URL:
+download the video first. It takes about 15 seconds.
 
 ## Read the result
 
@@ -49,5 +48,4 @@ Labels are the model's best guess with probabilities; say so when one is below 0
 
 - OpenAI: one `whisper-1` transcription (billed per minute of audio) and one Decisions request
   per video.
-- apinoa: a TikTok URL costs 2 units ($0.002) per video.
 - Analyse only videos you have the right to use.

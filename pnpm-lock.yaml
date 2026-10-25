@@ -166,9 +166,6 @@ importers:
 
   .:
     dependencies:
-      '@apinoa/sdk':
-        specifier: ^0.1.1
-        version: 0.1.1
       '@modelcontextprotocol/sdk':
         specifier: ^1.32.2
         version: 1.32.2(zod@3.25.76)
@@ -190,10 +187,6 @@ importers:
         version: 3.2.7(@types/node@20.19.43)
 
 packages:
-
-  '@apinoa/sdk@0.1.1':
-    resolution: {integrity: sha512-S5nboy7ciz9hY9zKq7QWjOnkhEuJR1IfH1jRF8QJ+d1vUojZ9PhGnDz5OfHF3uKMWEbp71d2452Ae9QoG7I/vQ==}
-    engines: {node: '>=20'}
 
   '@esbuild/aix-ppc64@0.28.2':
     resolution: {integrity: sha512-XExcO+dvLKvVtNTibSTBej1NCAbaGhWn9Ww1ZPx80qsahhPFe/8jgWP0IchNe0F3HwkU7n8ejhH8bjonqht8mQ==}
@@ -1121,8 +1114,6 @@ packages:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
 snapshots:
-
-  '@apinoa/sdk@0.1.1': {}
 
   '@esbuild/aix-ppc64@0.28.2':
     optional: true

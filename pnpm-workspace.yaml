@@ -1,5 +1,2 @@
 allowBuilds:
   esbuild: true
-# @apinoa/sdk is our own package (apinoa), released 2026-10-25.
-minimumReleaseAgeExclude:
-  - "@apinoa/sdk"

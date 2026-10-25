@@ -18,7 +18,7 @@ export function precheck(options: Options): Failed | undefined {
   return undefined;
 }
 
-export type Breakdown = { ok: true; analysis: Analysis; frames: Buffer[]; postId?: string };
+export type Breakdown = { ok: true; analysis: Analysis; frames: Buffer[] };
 
 /** The analysis plus the 512 px frames the model saw (the CLI writes them out). */
 export async function breakdown(input: string | Buffer, options: Options = {}): Promise<Breakdown | Failed> {
@@ -30,7 +30,7 @@ export async function breakdown(input: string | Buffer, options: Options = {}): 
 
   let resolved;
   try {
-    resolved = await resolveInput(input, options);
+    resolved = await resolveInput(input);
   } catch (e) {
     return fail(e);
   }
@@ -70,7 +70,7 @@ export async function breakdown(input: string | Buffer, options: Options = {}): 
       ...(transcriptError ? { transcriptError } : {}),
       ...(labels.inputTokens !== undefined ? { inputTokens: labels.inputTokens } : {}),
     };
-    return { ok: true, analysis, frames, ...(resolved.postId ? { postId: resolved.postId } : {}) };
+    return { ok: true, analysis, frames };
   } catch (e) {
     return fail(e);
   } finally {

@@ -75,13 +75,7 @@ export type FfmpegOptions = {
   ffprobePath?: string;
 };
 
-export type InputOptions = {
-  /** Default: env APINOA_API_KEY. Needed only for TikTok URLs. */
-  apinoaApiKey?: string;
-  fetch?: typeof fetch;
-};
-
-export type Options = OpenAIOptions & FfmpegOptions & InputOptions & {
+export type Options = OpenAIOptions & FfmpegOptions & {
   /** Up to 20 yes/no questions about the video. */
   questions?: Question[];
 };

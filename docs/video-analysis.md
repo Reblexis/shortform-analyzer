@@ -90,4 +90,4 @@ sells 0, production `mixed`, voice `none`, a question 0.5. `textOnScreen` is lef
 and in `schema/analysis.schema.json`. `npx shortform-breakdown analyze <video>` writes
 `analysis.json`, `report.html` (thumbnails, transcript and beats per scene), `frames/` and
 `sheet.jpg` into `<video>.breakdown/`. It needs `ffmpeg` and `ffprobe` on PATH and
-`OPENAI_API_KEY`; a TikTok URL also needs `APINOA_API_KEY`.
+`OPENAI_API_KEY`.

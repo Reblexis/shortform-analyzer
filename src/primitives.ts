@@ -1,7 +1,7 @@
 // shortform-breakdown/primitives: Layers 1 and 2 (docs/concepts.md). Experimental: a minor version may change these.
 
 // Layer 1 · building blocks
-export { resolveInput, TIKTOK_URL, type ResolvedInput } from "./blocks/input.js";
+export { resolveInput, type ResolvedInput } from "./blocks/input.js";
 export { probe } from "./blocks/probe.js";
 export { detectScenes, MAX_SCENES, MAX_TAKE, MIN_SCENE, SCENE_THRESHOLD, type SceneOptions, type SceneRules } from "./blocks/scenes.js";
 export { extractFrames, FRAME_SIDE, grabFrame, THUMB_SIDE, type FrameOptions } from "./blocks/frames.js";

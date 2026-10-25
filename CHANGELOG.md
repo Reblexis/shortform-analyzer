@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- apinoa is removed (`@apinoa/sdk`, `APINOA_API_KEY`): input is a video file, a path or a `Buffer`.
+  A URL fails as before, with "download the video first and pass the file".
+- `primitives`: `TIKTOK_URL` is removed, `resolveInput(input)` takes no options, and
+  `ResolvedInput` has no `postId`. `Options` has no `apinoaApiKey`.
+
 ## 0.1.2 (2026-10-25)
 
 - Credits: Trevor and Viktor. No code changes.

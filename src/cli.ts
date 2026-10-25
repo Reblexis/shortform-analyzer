@@ -1,16 +1,16 @@
 #!/usr/bin/env node
-// npx shortform-breakdown analyze <file-or-tiktok-url> | screen <file-or-tiktok-url> | mcp
+// npx shortform-breakdown analyze <file> | screen <file> | mcp
 import { basename, resolve } from "node:path";
 import { parseArgs } from "node:util";
 import type { Question } from "./types.js";
 import { VERSION } from "./version.js";
 
 const USAGE = `Usage:
-  shortform-breakdown analyze <file-or-tiktok-url> [--out <dir>] [--question name="question"]... [--json]
-  shortform-breakdown screen  <file-or-tiktok-url> --question name="question"...
+  shortform-breakdown analyze <file> [--out <dir>] [--question name="question"]... [--json]
+  shortform-breakdown screen  <file> --question name="question"...
   shortform-breakdown mcp
 
-Keys: OPENAI_API_KEY (always), APINOA_API_KEY (TikTok URLs only).
+Key: OPENAI_API_KEY.
 Docs: https://github.com/trevkang/shortform-breakdown`;
 
 
@@ -22,9 +22,9 @@ export function parseQuestion(arg: string): Question {
   return { name: arg.slice(0, i).trim(), question: arg.slice(i + 1).trim().replace(/^(["'])(.*)\1$/, "$2") };
 }
 
-/** Where `analyze` writes by default: next to the file, or ./<post id>.breakdown/ for a URL. */
-export function defaultOut(input: string, postId?: string): string {
-  return postId ? resolve(`${postId}.breakdown`) : resolve(`${input}.breakdown`);
+/** Where `analyze` writes by default: next to the file. */
+export function defaultOut(input: string): string {
+  return resolve(`${input}.breakdown`);
 }
 
 async function main(argv: string[]): Promise<number> {
@@ -77,9 +77,9 @@ async function main(argv: string[]): Promise<number> {
   const { summarize } = await import("./pipeline/summary.js");
   const r = await breakdown(input, { questions });
   if (!r.ok) { console.error(r.error); return 1; }
-  const dir = values.out ? resolve(values.out) : defaultOut(input, r.postId);
+  const dir = values.out ? resolve(values.out) : defaultOut(input);
   try {
-    await writeBreakdown(dir, r.analysis, r.frames, { title: r.postId ?? basename(input) });
+    await writeBreakdown(dir, r.analysis, r.frames, { title: basename(input) });
   } catch (e) {
     console.error(`writing ${dir}: ${(e as Error).message}`);
     return 1;
