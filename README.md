@@ -204,6 +204,10 @@ pnpm typecheck
 pnpm test:consumer  # installs the packed tarball into a blank project and imports it
 ```
 
+## Credits
+
+Built by [Trevor](https://github.com/trevkang) and [Viktor](https://github.com/Reblexis). It started as the video analysis module of viral-oracle, their team project at the Omnara hackathon (October 2026).
+
 ## Licence
 
 MIT. The how-it-works animation was made with the `explainer-engaging` skill from [Barty-Bart/motion-graphics](https://github.com/Barty-Bart/motion-graphics) (MIT); Geist fonts under the SIL Open Font License ([docs/media](docs/media/README.md)).
