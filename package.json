@@ -1,0 +1,71 @@
+{
+  "name": "shortform-breakdown",
+  "version": "0.1.0",
+  "description": "Break a short-form video into scenes: transcript, beat (hook, setup, value, proof, payoff, cta), lever and hold per scene, plus the video's format. A library, a CLI, an MCP server and an agent skill.",
+  "license": "MIT",
+  "author": "trevkang",
+  "homepage": "https://github.com/trevkang/shortform-breakdown#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trevkang/shortform-breakdown.git"
+  },
+  "bugs": "https://github.com/trevkang/shortform-breakdown/issues",
+  "keywords": [
+    "video",
+    "short-form",
+    "tiktok",
+    "reels",
+    "shorts",
+    "scene-detection",
+    "transcript",
+    "whisper",
+    "openai",
+    "mcp",
+    "agent-skill",
+    "ffmpeg"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./primitives": {
+      "types": "./dist/primitives.d.ts",
+      "default": "./dist/primitives.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "shortform-breakdown": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "schema",
+    "skills"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && chmod +x dist/cli.js",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && vitest run",
+    "test:consumer": "bash tests/consumer/run.sh",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@apinoa/sdk": "^0.1.1",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "ajv": "^8.17.1",
+    "typescript": "~5.7.3",
+    "vitest": "^3.2.4"
+  },
+  "packageManager": "pnpm@12.14.0"
+}

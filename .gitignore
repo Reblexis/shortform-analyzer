@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.tgz
+*.breakdown/
+.DS_Store
+.env
+.env.*
+legacy/
+docs/open-source.md

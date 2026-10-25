@@ -1,0 +1,43 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm test:consumer
+      - name: npm pack ships only dist, schema, skills, README, LICENSE, package.json
+        run: |
+          npm pack --dry-run --json | node -e '
+            const files = JSON.parse(require("fs").readFileSync(0, "utf8"))[0].files.map((f) => f.path);
+            const bad = files.filter((f) => !/^(dist|schema|skills)\//.test(f) && !["README.md", "LICENSE", "package.json", "CHANGELOG.md"].includes(f));
+            if (bad.length) { console.error("unexpected files:", bad); process.exit(1); }
+            console.log(files.length, "files ok");'
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
