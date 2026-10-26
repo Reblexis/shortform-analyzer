@@ -16,11 +16,11 @@ if (a.ok) console.log(summarize(a));
 
 ## How it works
 
-<p align="center"><img src="https://raw.githubusercontent.com/trevkang/shortform-breakdown/main/docs/media/how-it-works.gif" width="100%" alt="A white ball travels through the pipeline: it switches on 'analyze' for clip.mp4, rolls along a film strip that splits into three scenes at 1.5 s and 3.0 s, bounces down three cards (Transcript, Align, Frames), slides down a Decisions table that labels scene 1 hook, scene 2 value and scene 3 cta, lands on Export, which writes analysis.json, report.html and sheet.jpg, then flies back to the start while the camera shows the whole course."></p>
+<p align="center"><img src="https://raw.githubusercontent.com/trevkang/shortform-breakdown/main/docs/media/how-it-works.gif" width="100%" alt="A real TikTok (Zach King, a message to all AI, 27.9 s) goes through the package. Step 1, detectScenes: the timeline gets 14 cuts and 2 long-take splits, and 17 scene rows appear. Step 2, transcribe and alignWords: each row fills with the words said in it. Step 3, extractFrames: the middle frame of each scene is picked. Step 4, decide: one request labels every scene with a beat, a lever and a hold score. Step 5, the Analysis: skit, awareness, on camera person, sections hook, setup, value, payoff, cta, payoff."></p>
 
-<p align="center"><a href="docs/media/how-it-works.mp4">Watch with sound</a></p>
+<p align="center"><a href="docs/media/how-it-works.mp4">MP4</a> · Every time, word and label on screen is a real run of <code>analyzeVideo</code> on <a href="https://www.tiktok.com/@zachking/video/7655004069190192398">Zach King's “a message to all AI”</a> (the video is his).</p>
 
-One video goes through four steps, and the ball in the animation visits them in order:
+One video goes through four steps, numbered as in the animation:
 
 | Step | What happens | Function |
 | --- | --- | --- |
@@ -208,4 +208,4 @@ Built by [Trevor](https://github.com/trevkang) and [Viktor](https://github.com/R
 
 ## Licence
 
-MIT. The how-it-works animation was made with the `explainer-engaging` skill from [Barty-Bart/motion-graphics](https://github.com/Barty-Bart/motion-graphics) (MIT); Geist fonts under the SIL Open Font License ([docs/media](docs/media/README.md)).
+MIT. The how-it-works animation is rendered with `render.mjs` from [Barty-Bart/motion-graphics](https://github.com/Barty-Bart/motion-graphics) (MIT); the video in it belongs to [Zach King](https://www.tiktok.com/@zachking); Geist fonts under the SIL Open Font License ([docs/media](docs/media/README.md)).

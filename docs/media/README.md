@@ -1,23 +1,28 @@
 # How-it-works video
 
-`how-it-works.gif` (README) and `how-it-works.mp4` (with sound) are rendered from
-`how-it-works.src.html`, made with the `explainer-engaging` skill from
-[Barty-Bart/motion-graphics](https://github.com/Barty-Bart/motion-graphics) (MIT).
+`how-it-works.gif` (README) and `how-it-works.mp4` show a real run of `analyzeVideo` on
+[Zach King's "a message to all AI"](https://www.tiktok.com/@zachking/video/7655004069190192398)
+(27.9 s, 17 scenes). Every time, word and label on screen comes from that run. The video belongs
+to its creator: it is credited and linked, and only the rendered GIF and MP4 are in the repo
+(not the video, not `data.json`).
 
-To render again: replace `__GEIST__` and `__GEISTMONO__` with the base64 of `Geist-Variable.woff2`
-and `GeistMono-Medium.woff2` (Geist fonts, SIL Open Font License, `OFL-Geist.txt`), save as
-`how-it-works.html`, then, with `npm i playwright` and ffmpeg:
+`how-it-works.src.html` is a `seek(t)` page (1280×960, 37 s): a fixed map of the five steps at
+the top, the video and its timeline on the left, one row per scene on the right. `render.mjs` is
+from [Barty-Bart/motion-graphics](https://github.com/Barty-Bart/motion-graphics) (MIT). Geist
+fonts: SIL Open Font License (`OFL-Geist.txt`).
+
+To render again, with ffmpeg, `npm i playwright`, the built package and `OPENAI_API_KEY`
+(`geist.b64` and `geistmono.b64` are the base64 of `Geist-Variable.woff2` and `GeistMono-Medium.woff2`):
 
 ```bash
-node render.mjs how-it-works.html how-it-works.mp4 60 8 8
-ffmpeg -i how-it-works_silent.mp4 -vf "fps=15,scale=800:-2:flags=lanczos,split[a][b];[a]palettegen=max_colors=64:stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" how-it-works.gif
+npx shortform-breakdown analyze video.mp4 --out video.breakdown
+PKG=<repo> node prep.mjs video.mp4 video.breakdown/analysis.json data.json
+FONTS=<dir with geist.b64, geistmono.b64> node build.mjs data.json how-it-works.html
+node render.mjs how-it-works.html how-it-works.mp4 30 1 6
+ffmpeg -i how-it-works_silent.mp4 -vf "fps=12,scale=960:-2:flags=lanczos,split[a][b];[a]palettegen=max_colors=96:stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" how-it-works.gif
 ```
 
-## Demo videos (next version)
-
-The next how-it-works video shows a real TikTok going through the package: where it is cut,
-which words land in which scene, and the labels each scene gets. No metaphors: every number,
-word and label on screen comes from a real `analyzeVideo` run (`analysis.json`, `frames/`).
+## Why this video
 
 The candidates, picked from the most viewed TikToks through apinoa (views on 2026-10-25, cuts
 from `detectScenes`). The videos belong to their creators: credit the account and link the

@@ -6,6 +6,8 @@
   A URL fails as before, with "download the video first and pass the file".
 - `primitives`: `TIKTOK_URL` is removed, `resolveInput(input)` takes no options, and
   `ResolvedInput` has no `postId`. `Options` has no `apinoaApiKey`.
+- README: the how-it-works animation is now a real run on a TikTok (17 scenes, its words and
+  labels), one step at a time, instead of a metaphor.
 
 ## 0.1.2 (2026-10-25)
 
