@@ -16,7 +16,7 @@ if (a.ok) console.log(summarize(a));
 
 ## How it works
 
-<p align="center"><img src="https://raw.githubusercontent.com/trevkang/shortform-breakdown/main/docs/media/how-it-works.gif" width="100%" alt="A real TikTok (Zach King, a message to all AI, 27.9 s) goes through the package. Step 1, detectScenes: the timeline gets 14 cuts and 2 long-take splits, and 17 scene rows appear. Step 2, transcribe and alignWords: each row fills with the words said in it. Step 3, extractFrames: the middle frame of each scene is picked. Step 4, decide: one request labels every scene with a beat, a lever and a hold score. Step 5, the Analysis: skit, awareness, on camera person, sections hook, setup, value, payoff, cta, payoff."></p>
+<p align="center"><img src="https://raw.githubusercontent.com/trevkang/shortform-breakdown/main/docs/media/how-it-works.gif" width="100%" alt="A real TikTok (Zach King, a message to all AI, 27.9 s) plays while detectScenes cuts its timeline into 17 scenes. Then one Decisions request labels every scene at once: a beat (hook, setup, value, payoff, cta), a hold score, and the sections. The video is a skit, awareness, made as on camera person. Last, the playhead runs over the timeline again and shows each scene with its labels and words."></p>
 
 <p align="center"><a href="docs/media/how-it-works.mp4">MP4</a> · Every time, word and label on screen is a real run of <code>analyzeVideo</code> on <a href="https://www.tiktok.com/@zachking/video/7655004069190192398">Zach King's “a message to all AI”</a> (the video is his).</p>
 

@@ -6,8 +6,11 @@
 to its creator: it is credited and linked, and only the rendered GIF and MP4 are in the repo
 (not the video, not `data.json`).
 
-`how-it-works.src.html` is a `seek(t)` page (1280×960, 37 s): a fixed map of the five steps at
-the top, the video and its timeline on the left, one row per scene on the right. `render.mjs` is
+`how-it-works.src.html` is a `seek(t)` page (1280×720, 27.5 s) about two things: how the video
+is cut into scenes on a timeline, and how one decision labels them. The video plays while
+`detectScenes` cuts the timeline; then one Decisions request fills the beat and hold rows for
+every scene at once, and the sections; then the playhead runs over it again, showing each
+scene's labels and words. `render.mjs` is
 from [Barty-Bart/motion-graphics](https://github.com/Barty-Bart/motion-graphics) (MIT). Geist
 fonts: SIL Open Font License (`OFL-Geist.txt`).
 

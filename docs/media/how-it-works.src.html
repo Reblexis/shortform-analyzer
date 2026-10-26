@@ -3,205 +3,161 @@
 <style>
 @font-face { font-family: Geist; src: url(data:font/woff2;base64,__GEIST__) format("woff2"); font-weight: 100 900; }
 @font-face { font-family: GeistMono; src: url(data:font/woff2;base64,__GEISTMONO__) format("woff2"); }
-:root { --bg: #f6f5f1; --ink: #16161a; --mute: #8a8a93; --line: #e2e0d8; --card: #ffffff; --accent: #3e63dd; }
+:root { --bg: #f6f5f1; --ink: #16161a; --mute: #8a8a93; --line: #e2e0d8; --card: #fff; --accent: #3e63dd; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 1280px; height: 960px; overflow: hidden; background: var(--bg); color: var(--ink); font-family: Geist, system-ui, sans-serif; }
+html, body { width: 1280px; height: 720px; overflow: hidden; background: var(--bg); color: var(--ink); font-family: Geist, system-ui, sans-serif; }
 .mono { font-family: GeistMono, ui-monospace, monospace; }
-#header { position: absolute; left: 32px; right: 32px; top: 26px; height: 60px; display: flex; align-items: center; gap: 7px; }
-#brand { font-weight: 650; font-size: 19px; margin-right: 10px; white-space: nowrap; letter-spacing: -0.01em; }
-.pill { height: 44px; padding: 0 12px; white-space: nowrap; border-radius: 22px; border: 1.5px solid var(--line); background: var(--card); display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--mute); }
-.pill b { width: 24px; height: 24px; border-radius: 12px; background: var(--line); color: var(--mute); display: grid; place-items: center; font-size: 13px; font-weight: 600; }
-.pill.on { border-color: var(--ink); color: var(--ink); box-shadow: 0 4px 14px rgba(0,0,0,.08); }
-.pill.on b { background: var(--ink); color: #fff; }
-.pill.done { color: var(--ink); }
-.pill.done b { background: #30a46c; color: #fff; }
-.arrow { color: var(--line); font-size: 18px; }
-#player { position: absolute; left: 32px; top: 120px; width: 288px; height: 512px; border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,.18); }
-#player canvas { width: 288px; height: 512px; display: block; }
-#badge { position: absolute; left: 10px; top: 10px; padding: 4px 9px; border-radius: 6px; background: rgba(0,0,0,.6); color: #fff; font-size: 13px; }
-#tl { position: absolute; left: 32px; top: 648px; width: 288px; height: 36px; }
-#tl .bar { position: absolute; left: 0; right: 0; top: 14px; height: 8px; border-radius: 4px; background: var(--line); }
-#tl .fill { position: absolute; left: 0; top: 14px; height: 8px; border-radius: 4px; background: var(--ink); }
-#tl .tick { position: absolute; top: 6px; width: 2px; height: 24px; background: var(--ink); }
-#tl .tick.split { background: repeating-linear-gradient(var(--ink) 0 3px, transparent 3px 6px); }
-#tl .mid { position: absolute; top: 13px; width: 10px; height: 10px; margin-left: -5px; border-radius: 5px; background: var(--accent); border: 2px solid #fff; }
-#tl .seg { position: absolute; top: 12px; height: 12px; }
-#tlLabels { position: absolute; left: 32px; top: 688px; width: 288px; display: flex; justify-content: space-between; font-size: 12px; color: var(--mute); }
-#src { position: absolute; left: 32px; top: 716px; width: 288px; font-size: 13px; color: var(--mute); line-height: 1.45; }
-#caption { position: absolute; left: 32px; top: 790px; width: 288px; font-size: 17px; line-height: 1.42; }
-#caption code { font-family: GeistMono, monospace; font-size: 15px; background: #ebe9e1; padding: 1px 5px; border-radius: 4px; }
-#table { position: absolute; left: 352px; top: 120px; width: 896px; }
-.th, .row { display: grid; grid-template-columns: 30px 108px 30px 1fr 118px 162px 86px; align-items: center; column-gap: 10px; padding: 0 12px; }
-.th { height: 28px; font-size: 12px; color: var(--mute); text-transform: uppercase; letter-spacing: .06em; }
-.row { height: 46px; border-top: 1px solid var(--line); font-size: 15px; background: transparent; }
-.row.hot { background: #fff; box-shadow: inset 3px 0 0 var(--ink); }
-.row .n { color: var(--mute); font-size: 13px; }
-.row .t { font-size: 13px; }
-.row .t i { font-style: normal; color: var(--mute); font-size: 11px; margin-left: 4px; }
-.row img { width: 24px; height: 42px; object-fit: cover; border-radius: 3px; display: block; }
-.row img.pick { outline: 2.5px solid var(--accent); outline-offset: 1px; }
-.row .w { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.row .w.none { color: var(--mute); font-style: italic; }
-.chip { display: inline-block; padding: 3px 10px; border-radius: 12px; color: #fff; font-size: 13px; font-weight: 600; }
-.chip small { font-weight: 400; opacity: .85; margin-left: 4px; font-size: 11px; }
-.lever { font-size: 13px; }
-.dots { display: flex; gap: 4px; }
-.dots span { width: 11px; height: 11px; border-radius: 6px; background: var(--line); }
-.dots span.f { background: var(--ink); }
-#bracket { position: absolute; left: 1080px; top: 92px; width: 168px; height: 20px; font-size: 12px; text-align: center; color: var(--accent); font-weight: 600; }
-#sections { position: absolute; left: 340px; top: 148px; width: 8px; }
-#sections div { position: absolute; left: 0; width: 6px; border-radius: 3px; }
-#result { position: absolute; left: 32px; top: 120px; width: 288px; height: 512px; border-radius: 14px; background: var(--card); padding: 22px 20px; box-shadow: 0 10px 30px rgba(0,0,0,.10); }
-#result h3 { font-size: 13px; color: var(--mute); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; margin: 14px 0 6px; }
-#result h3:first-child { margin-top: 0; }
-#result .big { font-size: 26px; font-weight: 650; letter-spacing: -0.01em; }
-#result .sec { display: flex; align-items: center; gap: 8px; font-size: 14px; margin: 5px 0; }
-#result .sec .sw { width: 10px; height: 10px; border-radius: 3px; }
-#result .file { font-size: 13px; margin-top: 4px; }
+#title { position: absolute; left: 40px; top: 26px; font-size: 20px; font-weight: 650; letter-spacing: -0.01em; }
+#title span { font-weight: 400; color: var(--mute); margin-left: 10px; font-size: 16px; }
+#player { position: absolute; left: 40px; top: 80px; width: 300px; height: 533px; border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,.18); }
+#player canvas { width: 300px; height: 533px; display: block; }
+#clock { position: absolute; left: 10px; top: 10px; padding: 4px 9px; border-radius: 6px; background: rgba(0,0,0,.6); color: #fff; font-size: 13px; }
+#src { position: absolute; left: 40px; top: 626px; width: 300px; font-size: 13px; color: var(--mute); line-height: 1.45; }
+#src b { color: var(--ink); }
+#panel { position: absolute; left: 380px; top: 80px; width: 860px; height: 600px; }
+.lab { position: absolute; left: 0; width: 76px; font-size: 12px; color: var(--mute); text-transform: uppercase; letter-spacing: .06em; }
+#step { position: absolute; left: 0; top: 0; height: 34px; display: flex; align-items: center; gap: 10px; font-size: 16px; }
+#step b { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 13px; background: var(--ink); color: #fff; font-size: 13px; }
+#step code { font-family: GeistMono, monospace; font-size: 14px; background: #ebe9e1; padding: 2px 6px; border-radius: 4px; }
+#lane { position: absolute; left: 84px; top: 52px; width: 776px; height: 420px; }
+#ruler { position: absolute; left: 0; right: 0; top: 0; height: 18px; font-size: 11px; color: var(--mute); }
+#ruler span { position: absolute; top: 0; transform: translateX(-50%); }
+.blk { position: absolute; border-radius: 5px; overflow: hidden; }
+.film { top: 24px; height: 150px; background: #222 center/cover no-repeat; }
+.film i { position: absolute; left: 4px; bottom: 4px; font-style: normal; font-size: 10px; color: #fff; background: rgba(0,0,0,.55); padding: 1px 4px; border-radius: 3px; }
+.beat { top: 190px; height: 34px; color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+.hold { top: 236px; height: 48px; overflow: visible; }
+.hold div { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 4px; background: var(--ink); }
+.lever { top: 296px; height: 24px; font-size: 10px; display: flex; align-items: center; justify-content: center; background: #ebe9e1; color: var(--ink); white-space: nowrap; }
+.sec { top: 300px; height: 40px; border: 2px solid; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 650; background: var(--card); }
+#head { position: absolute; top: 18px; width: 2px; height: 326px; margin-left: -1px; background: var(--ink); z-index: 2; }
+#head::before { content: ""; position: absolute; left: -5px; top: -6px; border: 6px solid transparent; border-top-color: var(--ink); }
+#ask { position: absolute; left: -6px; top: 182px; height: 110px; border-radius: 8px; border: 2px dashed var(--accent); }
+#ask span { position: absolute; right: 8px; top: -24px; color: var(--accent); font-size: 13px; font-weight: 600; white-space: nowrap; }
+#card { position: absolute; left: 84px; top: 492px; width: 776px; height: 108px; border-radius: 12px; background: var(--card); box-shadow: 0 6px 20px rgba(0,0,0,.07); padding: 16px 20px; display: grid; grid-template-columns: 230px 1fr; gap: 6px 22px; }
+#card .k { font-size: 12px; color: var(--mute); text-transform: uppercase; letter-spacing: .06em; }
+#card .v { font-size: 15px; }
+#card .q { grid-column: 2; grid-row: 1 / span 3; font-size: 17px; line-height: 1.4; align-self: center; }
+.chip { display: inline-block; padding: 2px 9px; border-radius: 11px; color: #fff; font-size: 13px; font-weight: 600; }
+#verdict { position: absolute; left: 84px; top: 492px; width: 776px; height: 108px; display: flex; gap: 14px; }
+#verdict > div { flex: 1; border-radius: 12px; background: var(--card); box-shadow: 0 6px 20px rgba(0,0,0,.07); padding: 16px 18px; }
+#verdict .k { font-size: 12px; color: var(--mute); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+#verdict .v { font-size: 22px; font-weight: 650; }
+#verdict .s { font-size: 13px; color: var(--mute); margin-top: 2px; }
 </style></head>
 <body>
-<div id="header"><div id="brand">shortform-breakdown</div></div>
-<div id="player"><canvas id="cv" width="288" height="512"></canvas><div id="badge" class="mono"></div></div>
-<div id="result"></div>
-<div id="tl"><div class="bar"></div><div class="fill"></div></div>
-<div id="tlLabels" class="mono"><span>0 s</span><span id="tlEnd"></span></div>
+<div id="title">shortform-breakdown<span>one video → scenes on a timeline → one decision labels them all</span></div>
+<div id="player"><canvas id="cv" width="300" height="533"></canvas><div id="clock" class="mono"></div></div>
 <div id="src"></div>
-<div id="caption"></div>
-<div id="bracket"></div>
-<div id="sections"></div>
-<div id="table"><div class="th"><span>#</span><span>time</span><span></span><span>words</span><span>beat</span><span>lever</span><span>hold</span></div></div>
+<div id="panel">
+  <div id="step"></div>
+  <div class="lab" style="top:140px">scenes</div>
+  <div class="lab" style="top:262px">beat</div>
+  <div class="lab" style="top:316px">hold</div>
+  <div class="lab" style="top:366px">sections</div>
+  <div id="lane"><div id="ruler" class="mono"></div><div id="ask"><span>1 Decisions request · gpt-6-luna</span></div><div id="head"></div></div>
+  <div id="card"></div>
+  <div id="verdict"></div>
+</div>
 <script>
 const D = __DATA__;
-const META = { who: "@zachking", title: "a message to all AI", views: "67.8M views", url: "tiktok.com/@zachking/video/7655004069190192398" };
+const META = { who: "@zachking", title: "a message to all AI", views: "67.8M views" };
 const COLORS = { hook: "#e5484d", setup: "#f5a524", value: "#3e63dd", proof: "#30a46c", payoff: "#8e4ec6", cta: "#d6409f" };
-const STEPS = [["detectScenes"], ["transcribe", "alignWords"], ["extractFrames"], ["decide"], ["Analysis"]];
-// Phase times (seconds). Each step holds long enough to read.
-const T = { intro: 0, scenes: 3, words: 10.5, frames: 17, decide: 21.5, result: 29, end: 37 };
-const DUR = T.end, N = D.scenes.length, LEN = D.duration;
-window.VIDEO = { w: 1280, h: 960, duration: DUR };
+// Phases (s): the video plays and is cut; one decision labels every scene at once; then a slow pass shows each scene's labels.
+const T = { cut: 0.8, cutEnd: 9, decide: 9.6, labels: 10.2, labelsEnd: 11.2, secs: 11.8, pass: 14, passEnd: 26, end: 27.5 };
+const DUR = T.end, N = D.scenes.length, LEN = D.duration, W = 776, GAP = 3;
+window.VIDEO = { w: 1280, h: 720, duration: DUR };
 
 const $ = (id) => document.getElementById(id);
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const ease = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
 const prog = (t, a, b) => clamp((t - a) / (b - a));
 const fmt = (s) => s.toFixed(1);
+const X = (sec) => sec / LEN * W;
+const pct = (p) => Math.round(p * 100) + "%";
 
-// Header: the fixed map of steps.
-const header = $("header"), pills = [];
-STEPS.forEach((fns, i) => {
-  if (i) { const a = document.createElement("span"); a.className = "arrow"; a.textContent = "→"; header.appendChild(a); }
-  const p = document.createElement("div"); p.className = "pill";
-  p.innerHTML = `<b>${i + 1}</b><span class="mono">${fns.join(" · ")}</span>`;
-  header.appendChild(p); pills.push(p);
-});
-$("src").innerHTML = `<b style="color:var(--ink)">${META.who}</b> · “${META.title}”<br>${META.views} · ${fmt(LEN)} s · ${N} scenes`;
-$("tlEnd").textContent = fmt(LEN) + " s";
+$("src").innerHTML = `<b>${META.who}</b> · “${META.title}”<br>${META.views} · ${fmt(LEN)} s`;
+const ruler = $("ruler");
+for (let s = 0; s <= LEN; s += 5) { const e = document.createElement("span"); e.style.left = X(s) + "px"; e.textContent = s + " s"; ruler.appendChild(e); }
 
-// Timeline marks.
-const tl = $("tl"), ticks = [], mids = [], segs = [];
-D.scenes.forEach((s, i) => {
-  if (i) { const k = document.createElement("div"); k.className = "tick" + (s.cut === false ? " split" : ""); k.style.left = (s.start / LEN * 288 - 1) + "px"; tl.appendChild(k); ticks.push(k); } else ticks.push(null);
-  const m = document.createElement("div"); m.className = "mid"; m.style.left = ((s.start + s.end) / 2 / LEN * 288) + "px"; tl.appendChild(m); mids.push(m);
-  const g = document.createElement("div"); g.className = "seg"; g.style.left = (s.start / LEN * 288) + "px"; g.style.width = ((s.end - s.start) / LEN * 288 - 1) + "px";
-  g.style.background = COLORS[s.beat] || "transparent"; tl.appendChild(g); segs.push(g);
-});
+const lane = $("lane"), mk = (cls, s, e) => { const d = document.createElement("div"); d.className = "blk " + cls; d.style.left = (X(s) + GAP / 2) + "px"; d.style.width = (X(e) - X(s) - GAP) + "px"; lane.appendChild(d); return d; };
+const films = D.scenes.map((s, i) => { const d = mk("film", s.start, s.end); d.style.backgroundImage = `url(data:image/jpeg;base64,${D.thumbs[i]})`; d.innerHTML = `<i class="mono">${i + 1}</i>`; return d; });
+const rest = document.createElement("div"); rest.className = "blk film"; rest.style.background = "#d9d6cc"; lane.appendChild(rest);
+const beats = D.scenes.map((s) => { const d = mk("beat", s.start, s.end); d.style.background = COLORS[s.beat]; d.textContent = X(s.end) - X(s.start) > 54 ? s.beat : ""; return d; });
+const holds = D.scenes.map((s) => { const d = mk("hold", s.start, s.end); d.innerHTML = `<div style="height:${Math.max(3, s.hold / 4 * 48)}px"></div>`; return d; });
+const levers = [];
+const secs = (D.video.sections || []).map((x) => { const d = mk("sec", x.start, x.end); d.style.borderColor = COLORS[x.beat]; d.style.color = COLORS[x.beat]; d.textContent = X(x.end) - X(x.start) > 40 ? x.beat : ""; return d; });
+const ask = $("ask"); ask.style.width = (W + 12) + "px";
 
-// Table rows.
-const table = $("table"), rows = [];
-D.scenes.forEach((s, i) => {
-  const r = document.createElement("div"); r.className = "row";
-  const words = (s.transcript || "").trim();
-  r.innerHTML = `<span class="n mono">${i + 1}</span><span class="t mono">${fmt(s.start)}–${fmt(s.end)}${s.cut === false ? "<i>split</i>" : ""}</span>` +
-    `<img src="data:image/jpeg;base64,${D.thumbs[i]}"><span class="w${words ? "" : " none"}"></span>` +
-    `<span class="b">${s.beat ? `<span class="chip" style="background:${COLORS[s.beat]}">${s.beat}<small>${Math.round(s.beatP * 100)}%</small></span>` : ""}</span>` +
-    `<span class="lever mono">${s.lever || ""}</span><span class="dots">${[0, 1, 2, 3, 4].map((k) => `<span class="${k < Math.round(s.hold) ? "f" : ""}"></span>`).join("")}</span>`;
-  table.appendChild(r);
-  rows.push({ el: r, words, w: r.querySelector(".w"), img: r.querySelector("img"), b: r.querySelector(".b"), l: r.querySelector(".lever"), d: r.querySelector(".dots"), t: r.querySelector(".t") });
-});
+const v = D.video;
+$("verdict").innerHTML = `<div><div class="k">format</div><div class="v">${v.format}</div><div class="s mono">${pct(v.formatP)}</div></div>` +
+  `<div><div class="k">goal</div><div class="v">${v.goal}</div><div class="s mono">sells ${pct(v.sells)}</div></div>` +
+  `<div><div class="k">made as</div><div class="v" style="font-size:17px">${v.production.replaceAll("_", " ")}</div><div class="s mono">${v.voice.replaceAll("_", " ")}</div></div>`;
 
-// Sections along the table's left edge, and the result card.
-const secBox = $("sections"), secEls = [];
-const rowTop = (i) => i * 46;
-(D.video?.sections || []).forEach((x) => {
-  const a = D.scenes.findIndex((s) => Math.abs(s.start - x.start) < 1e-6), b = D.scenes.findIndex((s) => Math.abs(s.end - x.end) < 1e-6);
-  const e = document.createElement("div"); e.style.top = (rowTop(a) + 4) + "px"; e.style.height = (rowTop(b + 1) - rowTop(a) - 8) + "px"; e.style.background = COLORS[x.beat];
-  secBox.appendChild(e); secEls.push(e);
-});
-if (D.video) {
-  const v = D.video, secs = v.sections.map((x) => `<div class="sec"><span class="sw" style="background:${COLORS[x.beat]}"></span><span class="mono">${fmt(x.start)}–${fmt(x.end)} s</span><b>${x.beat}</b></div>`);
-  const shown = secs.length > 7 ? [...secs.slice(0, 6), `<div class="sec" style="color:var(--mute)">+ ${secs.length - 6} more</div>`] : secs;
-  $("result").innerHTML = `<h3>format · goal</h3><div class="big">${v.format}</div><div class="mono" style="font-size:14px">${v.goal} · sells ${Math.round(v.sells * 100)}%</div>` +
-    `<h3>made as</h3><div class="mono" style="font-size:14px">${v.production}<br>${v.voice}</div>` +
-    `<h3>sections</h3>${shown.join("")}<h3>writes</h3><div class="file mono">analysis.json · report.html<br>frames/01–${String(N).padStart(2, "0")}.jpg · sheet.jpg</div>`;
-}
-
-// Real frames of the video.
 const cv = $("cv"), ctx = cv.getContext("2d");
 const imgs = D.play.map((b) => { const im = new Image(); im.src = "data:image/jpeg;base64," + b; return im; });
-const thumbsBig = D.thumbs.map((b) => { const im = new Image(); im.src = "data:image/jpeg;base64," + b; return im; });
-function draw(im) { if (!im.naturalWidth) return; const r = Math.max(288 / im.naturalWidth, 512 / im.naturalHeight); const w = im.naturalWidth * r, h = im.naturalHeight * r; ctx.drawImage(im, (288 - w) / 2, (512 - h) / 2, w, h); }
+function draw(im) { if (!im.naturalWidth) return; const r = Math.max(300 / im.naturalWidth, 533 / im.naturalHeight); const w = im.naturalWidth * r, h = im.naturalHeight * r; ctx.drawImage(im, (300 - w) / 2, (533 - h) / 2, w, h); }
 const frameAt = (sec) => imgs[clamp(Math.floor(sec * D.playFps), 0, imgs.length - 1)];
 const sceneAt = (sec) => { for (let i = N - 1; i >= 0; i--) if (sec >= D.scenes[i].start) return i; return 0; };
 
-const CAPTIONS = [
-  [T.intro, `A real TikTok goes in, as a file or a <code>Buffer</code>.`],
-  [T.scenes, `<code>detectScenes</code>: ffmpeg finds the cuts. A take over 5 s is split (dashed). <b>${N} scenes</b>.`],
-  [T.words, `<code>transcribe</code> gives every word a time; <code>alignWords</code> puts each word in the scene it is said in.`],
-  [T.frames, `<code>extractFrames</code>: the middle frame of each scene (512 px) is what the model sees.`],
-  [T.decide, `<code>decide</code>: <b>one</b> OpenAI Decisions request reads every scene in order, frame next to words, and labels each one.`],
-  [T.result, `The <code>Analysis</code>: scenes with their labels, sections, and what kind of video it is.`],
+const STEP = [
+  [0, 1, `<code>detectScenes</code> cuts the video where the shot changes`],
+  [T.decide, 2, `<code>decide</code>: one request reads every scene's frame and words, and labels them all at once`],
+  [T.pass, 3, `Each scene on the timeline, with what the decision gave it`],
 ];
 
 function seek(t) {
   t = clamp(t, 0, DUR - 1e-3);
-  const phase = t < T.scenes ? 0 : t < T.words ? 1 : t < T.frames ? 2 : t < T.decide ? 3 : t < T.result ? 4 : 5;
-  pills.forEach((p, i) => { p.className = "pill" + (phase - 1 === i ? " on" : phase - 1 > i ? " done" : ""); });
-  let cap = CAPTIONS[0][1]; for (const [a, c] of CAPTIONS) if (t >= a) cap = c;
-  $("caption").innerHTML = cap;
-  $("caption").style.opacity = String(Math.min(...CAPTIONS.map(([a]) => (t >= a ? clamp((t - a) / 0.35) : 1)).filter((x) => x < 1), 1));
+  let st = STEP[0]; for (const s of STEP) if (t >= s[0]) st = s;
+  $("step").innerHTML = `<b>${st[1]}</b><span>${st[2]}</span>`;
+  $("step").style.opacity = String(clamp((t - st[0]) / 0.3 + (st[0] === 0 ? 1 : 0)));
 
-  // What the player shows, and where the playhead is.
-  let vsec = 0, hot = -1, sweep = 0;
-  if (phase === 0) vsec = t - T.intro;
-  else if (phase === 1) { sweep = ease(prog(t, T.scenes + 0.3, T.words - 0.8)); vsec = sweep * LEN; }
-  else if (phase === 2) { sweep = ease(prog(t, T.words + 0.3, T.frames - 0.8)); vsec = sweep * LEN; hot = sceneAt(vsec); }
-  else if (phase === 3) { const k = prog(t, T.frames + 0.3, T.decide - 0.5); hot = Math.min(N - 1, Math.floor(k * N)); }
-  else if (phase === 4) { hot = Math.min(N - 1, Math.floor(prog(t, T.decide + 1.2, T.result - 2) * N)); if (prog(t, T.decide + 1.2, T.result - 2) >= 1) hot = -1; }
-  const showResult = phase === 5;
-  $("player").style.opacity = showResult ? String(1 - prog(t, T.result, T.result + 0.5)) : "1";
-  $("result").style.opacity = showResult ? String(prog(t, T.result, T.result + 0.5)) : "0";
-  if (phase === 3 && hot >= 0) draw(thumbsBig[hot]); else draw(frameAt(phase >= 3 ? 0 : vsec));
-  $("badge").textContent = phase === 3 && hot >= 0 ? `scene ${hot + 1} · middle frame` : `${fmt(phase >= 3 ? 0 : vsec)} s`;
-  $("badge").style.opacity = phase >= 4 ? "0" : "1";
+  // The playhead: once through while cutting, then once over the labelled timeline.
+  let vsec = 0, head = false;
+  if (t < T.cutEnd) { vsec = ease(prog(t, T.cut, T.cutEnd)) * LEN; head = t >= T.cut; }
+  else if (t >= T.pass && t < T.passEnd) { vsec = prog(t, T.pass, T.passEnd) * LEN; head = true; }
+  else if (t >= T.passEnd) vsec = LEN - 0.01;
+  draw(frameAt(vsec));
+  $("clock").textContent = fmt(vsec) + " s";
+  $("head").style.left = X(vsec) + "px";
+  $("head").style.opacity = head ? "1" : "0";
 
-  const fillTo = phase === 0 ? vsec / LEN : phase <= 2 ? sweep : 1;
-  tl.querySelector(".fill").style.width = (fillTo * 288) + "px";
-  tl.querySelector(".fill").style.opacity = phase >= 3 ? "0" : "1";
-  const cutUntil = phase === 1 ? vsec : phase > 1 ? LEN + 1 : -1;
-  ticks.forEach((k, i) => { if (k) k.style.opacity = D.scenes[i].start <= cutUntil ? "1" : "0"; });
-  mids.forEach((m, i) => { m.style.opacity = phase === 3 ? (i <= hot ? "1" : "0.15") : "0"; });
-  segs.forEach((g, i) => { g.style.opacity = phase >= 4 ? (phase === 5 || i < hot || hot === -1 ? "1" : "0") : "0"; });
+  // Cuts: a scene's block appears when the playhead reaches it; ahead of the playhead is one grey strip.
+  const cutting = t < T.cutEnd, cur = sceneAt(vsec);
+  films.forEach((d, i) => { d.style.display = !cutting || i <= cur && t >= T.cut ? "block" : "none"; });
+  const restFrom = !cutting ? LEN : t < T.cut ? 0 : D.scenes[cur].end;
+  rest.style.display = restFrom >= LEN ? "none" : "block";
+  rest.style.left = (X(restFrom) + (restFrom ? GAP / 2 : 0)) + "px"; rest.style.width = (W - X(restFrom) - (restFrom ? GAP / 2 : 0)) + "px";
+  rest.innerHTML = t < T.cut ? `<i class="mono" style="font-size:12px">video.mp4 · ${fmt(LEN)} s</i>` : "";
+  // While cutting, the current scene's block grows with the playhead.
+  if (cutting && t >= T.cut) { const s = D.scenes[cur]; films[cur].style.width = Math.max(2, X(Math.min(vsec, s.end)) - X(s.start) - GAP / 2) + "px"; rest.style.left = (X(vsec) + GAP / 2) + "px"; rest.style.width = Math.max(0, W - X(vsec) - GAP / 2) + "px"; rest.style.display = "block"; }
+  else films.forEach((d, i) => { const s = D.scenes[i]; d.style.width = (X(s.end) - X(s.start) - GAP) + "px"; });
 
-  rows.forEach((r, i) => {
-    const s = D.scenes[i];
-    const shown = phase > 1 || (phase === 1 && s.start <= vsec);
-    const enter = phase === 1 ? prog(vsec, s.start, s.start + LEN * 0.04) : 1;
-    r.el.style.opacity = shown ? String(0.15 + 0.85 * ease(enter)) : "0";
-    r.el.style.transform = shown ? `translateX(${(1 - ease(enter)) * 24}px)` : "translateX(24px)";
-    r.el.classList.toggle("hot", i === hot);
-    // Words appear as the playhead passes the scene.
-    const wp = phase > 2 ? 1 : phase === 2 ? prog(vsec, s.start, s.end) : 0;
-    const text = r.words || "(nothing said)";
-    r.w.textContent = phase < 2 ? "" : (r.words ? r.words.slice(0, Math.ceil(r.words.length * wp)) : wp >= 1 ? text : "");
-    r.img.classList.toggle("pick", phase === 3 && i <= hot);
-    r.img.style.opacity = phase === 3 && i > hot ? "0.35" : "1";
-    const lab = phase === 5 ? 1 : phase === 4 ? (hot === -1 ? 1 : i < hot ? 1 : i === hot ? prog(t, T.decide + 1.2 + (i / N) * (T.result - 3.2 - T.decide), T.decide + 1.2 + ((i + 1) / N) * (T.result - 3.2 - T.decide)) : 0) : 0;
-    [r.b, r.l, r.d].forEach((e) => { e.style.opacity = String(ease(lab)); });
-  });
-  $("bracket").textContent = phase === 4 ? "1 request · gpt-6-luna" : "";
-  secEls.forEach((e) => { e.style.opacity = String(phase === 5 ? prog(t, T.result + 0.3, T.result + 1) : 0); });
-  // Fade to the start so the loop is seamless.
-  document.body.style.opacity = String(1 - prog(t, DUR - 0.6, DUR) * 0.0);
+  // The decision: the dashed request box over every row, then every label at once.
+  ask.style.opacity = String(prog(t, T.decide - 0.2, T.decide + 0.2) * (1 - prog(t, T.labelsEnd + 0.4, T.labelsEnd + 0.9)));
+  const lab = (i) => ease(prog(t, T.labels + i * 0.03, T.labels + i * 0.03 + 0.5));
+  beats.forEach((d, i) => { d.style.opacity = String(lab(i)); d.style.transform = `translateY(${(1 - lab(i)) * -10}px)`; });
+  holds.forEach((d, i) => { d.style.opacity = String(lab(i)); d.firstChild.style.transform = `scaleY(${lab(i)})`; d.firstChild.style.transformOrigin = "bottom"; });
+  levers.forEach((d, i) => { d.style.opacity = String(lab(i)); });
+  secs.forEach((d) => { d.style.opacity = String(ease(prog(t, T.secs, T.secs + 0.5))); });
+
+  // The pass: the scene under the playhead stands out in every row, its labels in the card.
+  const hot = t >= T.pass && t < T.passEnd ? cur : -1;
+  if (t >= T.pass) [films, beats, holds, levers].forEach((row) => row.forEach((d, i) => { d.style.opacity = hot === -1 || i === hot ? "1" : "0.28"; }));
+  const card = $("card");
+  if (hot >= 0) {
+    const s = D.scenes[hot];
+    card.innerHTML = `<div><span class="k">scene ${hot + 1} · </span><span class="mono v">${fmt(s.start)}–${fmt(s.end)} s</span></div>` +
+      `<div><span class="chip" style="background:${COLORS[s.beat]}">${s.beat} ${pct(s.beatP)}</span> <span class="mono" style="font-size:13px">${s.lever}</span></div>` +
+      `<div class="mono" style="font-size:13px">hold ${s.hold.toFixed(1)} / 4${s.text != null ? ` · text ${pct(s.text)}` : ""}</div>` +
+      `<div class="q">${s.transcript ? "“" + s.transcript + "”" : '<span style="color:var(--mute)">(nothing said)</span>'}</div>`;
+  }
+  card.style.opacity = hot >= 0 ? "1" : "0";
+  $("verdict").style.opacity = String(hot >= 0 ? 0 : ease(prog(t, T.secs + 0.3, T.secs + 0.8)));
+  $("panel").style.opacity = String(1 - prog(t, DUR - 0.5, DUR));
 }
-Promise.all([...imgs, ...thumbsBig].map((im) => im.decode().catch(() => {}))).then(() => { window.seek = seek; if (!location.search.includes("render")) { const t0 = performance.now(); const loop = () => { seek(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); }; loop(); } else seek(0); });
+Promise.all(imgs.map((im) => im.decode().catch(() => {}))).then(() => {
+  window.seek = seek; seek(0);
+  if (!location.search.includes("render")) { const t0 = performance.now(); const loop = () => { seek(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); }; loop(); }
+});
 </script></body></html>
