@@ -20,7 +20,7 @@ if (a.ok) console.log(summarize(a));
 
 <p align="center"><a href="docs/media/how-it-works.mp4">MP4</a> · Every time, word and label on screen is a real run of <code>analyzeVideo</code> on <a href="https://www.tiktok.com/@zachking/video/7655004069190192398">Zach King's “a message to all AI”</a> (the video is his).</p>
 
-One video goes through four steps, numbered as in the animation:
+One video goes through four steps (the animation shows steps 1 and 4: the cut and the decision):
 
 | Step | What happens | Function |
 | --- | --- | --- |
