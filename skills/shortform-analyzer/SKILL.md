@@ -20,7 +20,7 @@ npx shortform-analyzer screen clip.mp4 --question face="Is a person's face on ca
 ```
 
 Needs `ffmpeg` and `ffprobe` on PATH and `OPENAI_API_KEY`. It takes a video file, not a URL:
-download the video first. It takes about 15 seconds.
+download the video first. It takes under 10 seconds.
 
 ## Read the result
 

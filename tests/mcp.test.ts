@@ -1,5 +1,5 @@
 // The MCP server through a real MCP client over an in-memory transport, with OpenAI faked at fetch.
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
@@ -23,6 +23,13 @@ describe("mcp", () => {
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual(["analyze_video", "screen_video"]);
     expect(Object.keys(tools.find((t) => t.name === "analyze_video")!.inputSchema.properties!)).toEqual(["input", "questions"]);
+  });
+
+  it("states the time the README's benchmark measured, as the skill does", async () => {
+    const client = await connect({});
+    const { tools } = await client.listTools();
+    expect(tools.find((t) => t.name === "analyze_video")!.description).toMatch(/under 10 seconds/);
+    expect(readFileSync("skills/shortform-analyzer/SKILL.md", "utf8")).toMatch(/under 10 seconds/);
   });
 
   it("returns a tool error, not a crash, on a bad input", async () => {

@@ -24,7 +24,7 @@ export function createServer(options: Options & { outDir?: string; version?: str
     title: "Analyze a short-form video",
     description: "Split one short-form video (a local file path) into scenes, transcribe it, and label each scene's beat " +
       "(hook, setup, value, proof, payoff, cta), lever (what keeps viewers watching) and hold (0-4); also the video's format, goal, production and voice. " +
-      "Writes analysis.json, report.html, frames/ and sheet.jpg (all frames on one image) to a folder and returns its path. Takes about 15 seconds.",
+      "Writes analysis.json, report.html, frames/ and sheet.jpg (all frames on one image) to a folder and returns its path. Takes under 10 seconds.",
     inputSchema: {
       input: z.string().describe("A local video file path"),
       questions: z.array(question).max(20).optional().describe("Up to 20 yes/no questions; each answer is a probability"),
