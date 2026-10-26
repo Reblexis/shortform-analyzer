@@ -1,13 +1,13 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 (2026-10-25)
 
 - apinoa is removed (`@apinoa/sdk`, `APINOA_API_KEY`): input is a video file, a path or a `Buffer`.
   A URL fails as before, with "download the video first and pass the file".
 - `primitives`: `TIKTOK_URL` is removed, `resolveInput(input)` takes no options, and
   `ResolvedInput` has no `postId`. `Options` has no `apinoaApiKey`.
-- README: the how-it-works animation is now a real run on a TikTok (17 scenes, its words and
-  labels), one step at a time, instead of a metaphor.
+- README: the how-it-works animation is now a real run on a TikTok: the timeline cut into 17
+  scenes, then one decision labelling them all at once.
 
 ## 0.1.2 (2026-10-25)
 

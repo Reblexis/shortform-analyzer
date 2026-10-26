@@ -1,6 +1,6 @@
 {
   "name": "shortform-breakdown",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Break a short-form video into scenes: transcript, beat (hook, setup, value, proof, payoff, cta), lever and hold per scene, plus the video's format. A library, a CLI, an MCP server and an agent skill.",
   "license": "MIT",
   "author": "trevkang",
