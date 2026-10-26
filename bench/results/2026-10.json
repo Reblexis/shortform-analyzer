@@ -1,0 +1,247 @@
+{
+ "prices_usd": {
+  "chat_in": 1e-07,
+  "chat_out": 5e-07,
+  "decisions_in": 1e-07,
+  "whisper_minute": 0.006
+ },
+ "rows": [
+  {
+   "tool": "byjlw",
+   "video": "catbrush",
+   "runs": 1,
+   "ok": 1,
+   "wall_s_each": [
+    81.86
+   ],
+   "wall_s": 81.86,
+   "user_s": 2.19,
+   "sys_s": 1.18,
+   "max_rss_mb": 2385.8,
+   "calls": 18,
+   "images": 17,
+   "bytes_up": 2524287,
+   "in_tok": 25711,
+   "out_tok": 5434,
+   "usd": 0.0052881
+  },
+  {
+   "tool": "crv",
+   "video": "catbrush",
+   "runs": 2,
+   "ok": 2,
+   "wall_s_each": [
+    27.07,
+    30.45
+   ],
+   "wall_s": 28.759999999999998,
+   "user_s": 42.965,
+   "sys_s": 1.4049999999999998,
+   "max_rss_mb": 910.55,
+   "calls": 1.0,
+   "images": 23.0,
+   "bytes_up": 733198.5,
+   "in_tok": 20171.5,
+   "out_tok": 533.0,
+   "usd": 0.00228365
+  },
+  {
+   "tool": "cvv",
+   "video": "catbrush",
+   "runs": 2,
+   "ok": 2,
+   "wall_s_each": [
+    17.09,
+    18.26
+   ],
+   "wall_s": 17.675,
+   "user_s": 1.0950000000000002,
+   "sys_s": 0.14,
+   "max_rss_mb": 98.15,
+   "calls": 2.0,
+   "images": 34.0,
+   "bytes_up": 1686531.0,
+   "in_tok": 19713.0,
+   "out_tok": 473.0,
+   "usd": 0.0039328
+  },
+  {
+   "tool": "ours",
+   "video": "catbrush",
+   "runs": 2,
+   "ok": 2,
+   "wall_s_each": [
+    4.77,
+    8.84
+   ],
+   "wall_s": 6.805,
+   "user_s": 2.73,
+   "sys_s": 0.255,
+   "max_rss_mb": 64.55,
+   "calls": 2.0,
+   "images": 7.0,
+   "bytes_up": 254087.5,
+   "in_tok": 7496.5,
+   "out_tok": 0.0,
+   "usd": 0.0024846500381469727
+  },
+  {
+   "tool": "byjlw",
+   "video": "garyvee",
+   "runs": 1,
+   "ok": 1,
+   "wall_s_each": [
+    346.74
+   ],
+   "wall_s": 346.74,
+   "user_s": 46.08,
+   "sys_s": 18.97,
+   "max_rss_mb": 4046.0,
+   "calls": 62,
+   "images": 61,
+   "bytes_up": 11134489,
+   "in_tok": 198162,
+   "out_tok": 18208,
+   "usd": 0.028920199999999997
+  },
+  {
+   "tool": "crv",
+   "video": "garyvee",
+   "runs": 2,
+   "ok": 2,
+   "wall_s_each": [
+    23.0,
+    22.19
+   ],
+   "wall_s": 22.595,
+   "user_s": 21.229999999999997,
+   "sys_s": 1.275,
+   "max_rss_mb": 1201.7,
+   "calls": 1.0,
+   "images": 67.0,
+   "bytes_up": 2000437.0,
+   "in_tok": 58666.0,
+   "out_tok": 825.5,
+   "usd": 0.0062793499999999995
+  },
+  {
+   "tool": "cvv",
+   "video": "garyvee",
+   "runs": 2,
+   "ok": 2,
+   "wall_s_each": [
+    16.93,
+    16.19
+   ],
+   "wall_s": 16.560000000000002,
+   "user_s": 2.46,
+   "sys_s": 0.275,
+   "max_rss_mb": 141.85,
+   "calls": 2.0,
+   "images": 62.0,
+   "bytes_up": 4709728.0,
+   "in_tok": 36339.0,
+   "out_tok": 725.5,
+   "usd": 0.010161650152587891
+  },
+  {
+   "tool": "ours",
+   "video": "garyvee",
+   "runs": 2,
+   "ok": 2,
+   "wall_s_each": [
+    8.33,
+    8.09
+   ],
+   "wall_s": 8.21,
+   "user_s": 8.335,
+   "sys_s": 0.65,
+   "max_rss_mb": 69.0,
+   "calls": 2.0,
+   "images": 16.0,
+   "bytes_up": 858762.0,
+   "in_tok": 16327.0,
+   "out_tok": 0.0,
+   "usd": 0.00780670016784668
+  },
+  {
+   "tool": "byjlw",
+   "video": "zachking",
+   "runs": 1,
+   "ok": 1,
+   "wall_s_each": [
+    110.19
+   ],
+   "wall_s": 110.19,
+   "user_s": 12.16,
+   "sys_s": 3.21,
+   "max_rss_mb": 3108.3,
+   "calls": 23,
+   "images": 22,
+   "bytes_up": 3239726,
+   "in_tok": 43452,
+   "out_tok": 6970,
+   "usd": 0.007830199999999999
+  },
+  {
+   "tool": "crv",
+   "video": "zachking",
+   "runs": 2,
+   "ok": 2,
+   "wall_s_each": [
+    15.51,
+    23.73
+   ],
+   "wall_s": 19.62,
+   "user_s": 8.605,
+   "sys_s": 0.495,
+   "max_rss_mb": 866.95,
+   "calls": 1.0,
+   "images": 39.0,
+   "bytes_up": 909515.0,
+   "in_tok": 34136.0,
+   "out_tok": 1091.5,
+   "usd": 0.0039593499999999995
+  },
+  {
+   "tool": "cvv",
+   "video": "zachking",
+   "runs": 2,
+   "ok": 2,
+   "wall_s_each": [
+    10.29,
+    15.28
+   ],
+   "wall_s": 12.785,
+   "user_s": 1.28,
+   "sys_s": 0.17,
+   "max_rss_mb": 110.30000000000001,
+   "calls": 2.0,
+   "images": 56.0,
+   "bytes_up": 2824551.0,
+   "in_tok": 32544.0,
+   "out_tok": 522.5,
+   "usd": 0.006313649954223633
+  },
+  {
+   "tool": "ours",
+   "video": "zachking",
+   "runs": 2,
+   "ok": 2,
+   "wall_s_each": [
+    4.02,
+    3.34
+   ],
+   "wall_s": 3.6799999999999997,
+   "user_s": 4.65,
+   "sys_s": 0.545,
+   "max_rss_mb": 67.9,
+   "calls": 2.0,
+   "images": 17.0,
+   "bytes_up": 524108.0,
+   "in_tok": 17051.0,
+   "out_tok": 0.0,
+   "usd": 0.004513099992370605
+  }
+ ]
+}
