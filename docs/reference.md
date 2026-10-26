@@ -1,6 +1,6 @@
 # Reference
 
-> The public contract of shortform-breakdown 0.1: entry points, inputs, outputs, CLI, MCP server and skill. The layers are explained in [concepts.md](concepts.md); labels and thresholds in [video-analysis.md](video-analysis.md).
+> The public contract of shortform-analyzer 0.1: entry points, inputs, outputs, CLI, MCP server and skill. The layers are explained in [concepts.md](concepts.md); labels and thresholds in [video-analysis.md](video-analysis.md).
 
 
 ### Layers
@@ -9,9 +9,9 @@
 
 | Layer | What | Import from | Stability |
 | --- | --- | --- | --- |
-| 3 · Pipeline & output | `analyzeVideo`, `screenVideo`, `screenCover`, `summarize`, `reportHtml`, CLI, MCP, skill | `shortform-breakdown` | Stable, semver |
-| 2 · Short-form preset | `shortformQuestions`, `parseShortform`, `makingQuestions`, `parseMaking`, `sectionsOf` | `shortform-breakdown/primitives` | Experimental |
-| 1 · Building blocks | `resolveInput`, `probe`, `detectScenes`, `grabFrame`, `extractFrames`, `extractAudio`, `transcribe`, `alignWords`, `sceneEvidence`, `frameEvidence`, `decide` | `shortform-breakdown/primitives` | Experimental |
+| 3 · Pipeline & output | `analyzeVideo`, `screenVideo`, `screenCover`, `summarize`, `reportHtml`, CLI, MCP, skill | `shortform-analyzer` | Stable, semver |
+| 2 · Short-form preset | `shortformQuestions`, `parseShortform`, `makingQuestions`, `parseMaking`, `sectionsOf` | `shortform-analyzer/primitives` | Experimental |
+| 1 · Building blocks | `resolveInput`, `probe`, `detectScenes`, `grabFrame`, `extractFrames`, `extractAudio`, `transcribe`, `alignWords`, `sceneEvidence`, `frameEvidence`, `decide` | `shortform-analyzer/primitives` | Experimental |
 
 Rules the code keeps:
 
@@ -23,7 +23,7 @@ Rules the code keeps:
 ### Import
 
 ```ts
-import { analyzeVideo, reportHtml, summarize } from "shortform-breakdown";
+import { analyzeVideo, reportHtml, summarize } from "shortform-analyzer";
 
 const a = await analyzeVideo("clip.mp4", {
   questions: [{ name: "face_on_camera", question: "Is a person's face on camera at any point?" }],
@@ -36,14 +36,14 @@ await writeFile("report.html", reportHtml(a));
 The building blocks, here scenes and words per scene with no model call:
 
 ```ts
-import { probe, detectScenes, extractAudio, transcribe, alignWords } from "shortform-breakdown/primitives";
+import { probe, detectScenes, extractAudio, transcribe, alignWords } from "shortform-analyzer/primitives";
 
 const { duration } = await probe("talk.mp4");
 const spans = await detectScenes("talk.mp4", { duration, maxTake: 30 });
 const texts = alignWords((await transcribe(await extractAudio("talk.mp4"))).words, spans);
 ```
 
-### Exports from `shortform-breakdown`
+### Exports from `shortform-analyzer`
 
 | Export | Does |
 | --- | --- |
@@ -54,9 +54,9 @@ const texts = alignWords((await transcribe(await extractAudio("talk.mp4"))).word
 | `summarize(analysis)` | Format, goal, scene count, production, then one line per section with its lever and what is said |
 | `BEATS`, `LEVERS`, `FORMATS`, `PRODUCTIONS`, `VOICES` and the types | The label sets and output types |
 
-**One error rule:** no export from `shortform-breakdown` throws for a bad video, a missing key or an API error. Each one returns `{ ok: false, error }`.
+**One error rule:** no export from `shortform-analyzer` throws for a bad video, a missing key or an API error. Each one returns `{ ok: false, error }`.
 
-### Exports from `shortform-breakdown/primitives`
+### Exports from `shortform-analyzer/primitives`
 
 | Export | Layer | Does |
 | --- | --- | --- |
@@ -203,12 +203,12 @@ Illustrative values, not a real video:
 ### CLI
 
 ```
-npx shortform-breakdown analyze <file> [--out <dir>] [--question name="question"]... [--json]
-npx shortform-breakdown screen  <file> --question name="question"...
-npx shortform-breakdown mcp
+npx shortform-analyzer analyze <file> [--out <dir>] [--question name="question"]... [--json]
+npx shortform-analyzer screen  <file> --question name="question"...
+npx shortform-analyzer mcp
 ```
 
-- `analyze` writes to `--out`. The default is `<file>.breakdown/`. It writes:
+- `analyze` writes to `--out`. The default is `<file>.analysis/`. It writes:
   - `analysis.json`;
   - `report.html`;
   - `frames/01.jpg` and onwards: the 512 px frames the model saw;
@@ -219,7 +219,7 @@ npx shortform-breakdown mcp
 
 ### MCP server
 
-`shortform-breakdown mcp` runs over stdio. It is built on `@modelcontextprotocol/sdk` and zod.
+`shortform-analyzer mcp` runs over stdio. It is built on `@modelcontextprotocol/sdk` and zod.
 
 | Tool | Input | Returns |
 | --- | --- | --- |
@@ -230,9 +230,9 @@ Setup lines for Claude Code, Claude Desktop and Cursor are in the README.
 
 ### Agent skill
 
-`skills/shortform-breakdown/SKILL.md` uses the Agent Skills format: `name` and `description` frontmatter, then the body. The body covers:
+`skills/shortform-analyzer/SKILL.md` uses the Agent Skills format: `name` and `description` frontmatter, then the body. The body covers:
 - when to use it: someone wants to know why a short video works, or how to borrow its structure;
-- the command: `npx shortform-breakdown analyze <file>`;
+- the command: `npx shortform-analyzer analyze <file>`;
 - reading the summary, and opening `sheet.jpg` to see the frames;
 - what the labels mean (link the tables in `docs/video-analysis.md`);
 - keys and costs.

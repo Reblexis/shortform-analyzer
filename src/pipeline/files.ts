@@ -12,7 +12,7 @@ const SHEET_TILE = 256; // px, width of one frame in sheet.jpg
 const two = (i: number) => String(i + 1).padStart(2, "0");
 
 /** Writes analysis.json, report.html, frames/01.jpg… and sheet.jpg (every frame tiled 4 wide) into `dir`. */
-export async function writeBreakdown(dir: string, analysis: Analysis, frames: Buffer[], options: FfmpegOptions & { title?: string } = {}) {
+export async function writeOutput(dir: string, analysis: Analysis, frames: Buffer[], options: FfmpegOptions & { title?: string } = {}) {
   const framesDir = join(dir, "frames");
   await rm(framesDir, { recursive: true, force: true });
   await mkdir(framesDir, { recursive: true });

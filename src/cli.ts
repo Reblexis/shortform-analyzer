@@ -1,17 +1,17 @@
 #!/usr/bin/env node
-// npx shortform-breakdown analyze <file> | screen <file> | mcp
+// npx shortform-analyzer analyze <file> | screen <file> | mcp
 import { basename, resolve } from "node:path";
 import { parseArgs } from "node:util";
 import type { Question } from "./types.js";
 import { VERSION } from "./version.js";
 
 const USAGE = `Usage:
-  shortform-breakdown analyze <file> [--out <dir>] [--question name="question"]... [--json]
-  shortform-breakdown screen  <file> --question name="question"...
-  shortform-breakdown mcp
+  shortform-analyzer analyze <file> [--out <dir>] [--question name="question"]... [--json]
+  shortform-analyzer screen  <file> --question name="question"...
+  shortform-analyzer mcp
 
 Key: OPENAI_API_KEY.
-Docs: https://github.com/trevkang/shortform-breakdown`;
+Docs: https://github.com/trevkang/shortform-analyzer`;
 
 
 class Usage extends Error {}
@@ -24,7 +24,7 @@ export function parseQuestion(arg: string): Question {
 
 /** Where `analyze` writes by default: next to the file. */
 export function defaultOut(input: string): string {
-  return resolve(`${input}.breakdown`);
+  return resolve(`${input}.analysis`);
 }
 
 async function main(argv: string[]): Promise<number> {
@@ -72,14 +72,14 @@ async function main(argv: string[]): Promise<number> {
     return 0;
   }
 
-  const { breakdown } = await import("./pipeline/analyze.js");
-  const { writeBreakdown } = await import("./pipeline/files.js");
+  const { analyzeWithFrames } = await import("./pipeline/analyze.js");
+  const { writeOutput } = await import("./pipeline/files.js");
   const { summarize } = await import("./pipeline/summary.js");
-  const r = await breakdown(input, { questions });
+  const r = await analyzeWithFrames(input, { questions });
   if (!r.ok) { console.error(r.error); return 1; }
   const dir = values.out ? resolve(values.out) : defaultOut(input);
   try {
-    await writeBreakdown(dir, r.analysis, r.frames, { title: basename(input) });
+    await writeOutput(dir, r.analysis, r.frames, { title: basename(input) });
   } catch (e) {
     console.error(`writing ${dir}: ${(e as Error).message}`);
     return 1;

@@ -18,10 +18,10 @@ export function precheck(options: Options): Failed | undefined {
   return undefined;
 }
 
-export type Breakdown = { ok: true; analysis: Analysis; frames: Buffer[] };
+export type Analyzed = { ok: true; analysis: Analysis; frames: Buffer[] };
 
 /** The analysis plus the 512 px frames the model saw (the CLI writes them out). */
-export async function breakdown(input: string | Buffer, options: Options = {}): Promise<Breakdown | Failed> {
+export async function analyzeWithFrames(input: string | Buffer, options: Options = {}): Promise<Analyzed | Failed> {
   const bad = precheck(options);
   if (bad) return bad;
   const questions = options.questions ?? [];
@@ -80,6 +80,6 @@ export async function breakdown(input: string | Buffer, options: Options = {}): 
 
 /** One short-form video → scenes with thumbnails, transcripts, beats, levers and hold; the video's format and goal. Never throws. */
 export async function analyzeVideo(input: string | Buffer, options: Options = {}): Promise<Analysis | Failed> {
-  const r = await breakdown(input, options);
+  const r = await analyzeWithFrames(input, options);
   return r.ok ? r.analysis : r;
 }

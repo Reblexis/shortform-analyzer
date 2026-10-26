@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { analyzeVideo, summarize } from "shortform-breakdown";
+import { analyzeVideo, summarize } from "shortform-analyzer";
 import { makeCuts } from "./lavfi.mjs";
 
 const fakeFetch = async (url) => {

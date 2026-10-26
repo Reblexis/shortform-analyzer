@@ -1,12 +1,12 @@
 # Concepts
 
-> What shortform-breakdown is made of: four building blocks that any video tool can use on their own, a short-form preset that turns them into a breakdown, and the pipeline that runs both in one call.
+> What shortform-analyzer is made of: four building blocks that any video tool can use on their own, a short-form preset that turns them into a breakdown, and the pipeline that runs both in one call.
 
 Implemented in 0.1.0 · Read with: [reference.md](reference.md) (the contract) and [video-analysis.md](video-analysis.md) (the labels and thresholds)
 
 ## The idea
 
-A short-form breakdown is four steps:
+A short-form analysis is four steps:
 
 1. Cut the video into **scenes**.
 2. **Transcribe** it, with a time for every word.
@@ -28,7 +28,7 @@ Layer 1 · Building blocks          resolveInput · probe · detectScenes · gra
 - **Layer 2** is one set of questions and how to read their answers: beats, levers, hold, format, production, voice. It makes no ffmpeg or network calls.
 - **Layer 3** joins the two and never fails by throwing. `analyzeVideo` is built only from what Layers 1 and 2 export, so anyone can rebuild it, or a variant of it, from the same parts.
 
-Imports: Layer 3 and the label sets come from `shortform-breakdown` (stable, semver). Layers 1 and 2 come from `shortform-breakdown/primitives` (experimental: they may change in a minor version until 1.0 of that subpath, and every change is listed in the changelog).
+Imports: Layer 3 and the label sets come from `shortform-analyzer` (stable, semver). Layers 1 and 2 come from `shortform-analyzer/primitives` (experimental: they may change in a minor version until 1.0 of that subpath, and every change is listed in the changelog).
 
 ## The data flow
 
@@ -109,7 +109,7 @@ Each question has a `name` (`[a-z0-9_]+`, unique), `instructions`, and a `scope`
 The request sends every `scene` question scene by scene first, then the `video` questions. A question the model refused or left out, or a choice it did not offer, is **absent** from the result. Deciding what an absent answer means belongs to whoever wrote the question, which is why fallbacks live in Layer 2. After `scene` questions are expanded, a request must hold 1 to 400 questions, or `decide` throws before sending anything.
 
 ```ts
-import { decide, sceneEvidence } from "shortform-breakdown/primitives";
+import { decide, sceneEvidence } from "shortform-analyzer/primitives";
 
 const d = await decide(sceneEvidence(spans, frames, texts, { duration }), [
   { type: "predicate", name: "logo", scope: "scene", instructions: "Is the brand logo visible in scene {scene}?" },
@@ -170,7 +170,7 @@ The CLI, the MCP server and the skill are thin wrappers over Layer 3. The field 
 Only scenes and words per scene, no model call:
 
 ```ts
-import { probe, detectScenes, extractAudio, transcribe, alignWords } from "shortform-breakdown/primitives";
+import { probe, detectScenes, extractAudio, transcribe, alignWords } from "shortform-analyzer/primitives";
 
 const { duration } = await probe("talk.mp4");
 const spans = await detectScenes("talk.mp4", { duration, maxTake: 30 });
@@ -181,7 +181,7 @@ const texts = alignWords(words, spans);
 The preset plus a scene question of your own:
 
 ```ts
-import { shortformQuestions, parseShortform, decide, sceneEvidence, type DecisionQuestion } from "shortform-breakdown/primitives";
+import { shortformQuestions, parseShortform, decide, sceneEvidence, type DecisionQuestion } from "shortform-analyzer/primitives";
 
 const questions: DecisionQuestion[] = [
   ...shortformQuestions(),

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 (2026-10-25)
+
+- Renamed from `shortform-breakdown` to `shortform-analyzer`: the npm package, the CLI command
+  (`npx shortform-analyzer analyze clip.mp4`), the MCP server, the agent skill
+  (`skills/shortform-analyzer`) and the repository (`trevkang/shortform-analyzer`). The old
+  package is deprecated and points here.
+- The CLI and MCP write to `<file>.analysis/` (was `<file>.breakdown/`).
+
 ## 0.2.0 (2026-10-25)
 
 - apinoa is removed (`@apinoa/sdk`, `APINOA_API_KEY`): input is a video file, a path or a `Buffer`.

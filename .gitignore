@@ -1,6 +1,7 @@
 node_modules/
 dist/
 *.tgz
+*.analysis/
 *.breakdown/
 .DS_Store
 .env

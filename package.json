@@ -1,15 +1,15 @@
 {
-  "name": "shortform-breakdown",
-  "version": "0.2.0",
+  "name": "shortform-analyzer",
+  "version": "0.3.0",
   "description": "Break a short-form video into scenes: transcript, beat (hook, setup, value, proof, payoff, cta), lever and hold per scene, plus the video's format. A library, a CLI, an MCP server and an agent skill.",
   "license": "MIT",
   "author": "trevkang",
-  "homepage": "https://github.com/trevkang/shortform-breakdown#readme",
+  "homepage": "https://github.com/trevkang/shortform-analyzer#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trevkang/shortform-breakdown.git"
+    "url": "git+https://github.com/trevkang/shortform-analyzer.git"
   },
-  "bugs": "https://github.com/trevkang/shortform-breakdown/issues",
+  "bugs": "https://github.com/trevkang/shortform-analyzer/issues",
   "keywords": [
     "video",
     "short-form",
@@ -39,7 +39,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "shortform-breakdown": "dist/cli.js"
+    "shortform-analyzer": "dist/cli.js"
   },
   "files": [
     "dist",

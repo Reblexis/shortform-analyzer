@@ -18,8 +18,8 @@ To render again, with ffmpeg, `npm i playwright`, the built package and `OPENAI_
 (`geist.b64` and `geistmono.b64` are the base64 of `Geist-Variable.woff2` and `GeistMono-Medium.woff2`):
 
 ```bash
-npx shortform-breakdown analyze video.mp4 --out video.breakdown
-PKG=<repo> node prep.mjs video.mp4 video.breakdown/analysis.json data.json
+npx shortform-analyzer analyze video.mp4 --out video.analysis
+PKG=<repo> node prep.mjs video.mp4 video.analysis/analysis.json data.json
 FONTS=<dir with geist.b64, geistmono.b64> node build.mjs data.json how-it-works.html
 node render.mjs how-it-works.html how-it-works.mp4 30 1 6
 ffmpeg -i how-it-works_silent.mp4 -vf "fps=12,scale=960:-2:flags=lanczos,split[a][b];[a]palettegen=max_colors=96:stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" how-it-works.gif

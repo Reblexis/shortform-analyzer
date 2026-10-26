@@ -8,7 +8,7 @@ export type ResolvedInput = { path: string; cleanup: () => Promise<void> };
 const keep = async () => {};
 
 async function tempFile(bytes: Buffer): Promise<ResolvedInput> {
-  const dir = await mkdtemp(join(tmpdir(), "shortform-breakdown-"));
+  const dir = await mkdtemp(join(tmpdir(), "shortform-analyzer-"));
   const path = join(dir, "video.mp4");
   await writeFile(path, bytes);
   return { path, cleanup: () => rm(dir, { recursive: true, force: true }) };

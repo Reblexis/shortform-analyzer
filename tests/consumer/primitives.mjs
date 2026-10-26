@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { detectScenes } from "shortform-breakdown/primitives";
+import { detectScenes } from "shortform-analyzer/primitives";
 import { makeCuts } from "./lavfi.mjs";
 
 const spans = await detectScenes(makeCuts());

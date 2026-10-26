@@ -1,10 +1,10 @@
-// shortform-breakdown mcp: analyze_video and screen_video over stdio.
+// shortform-analyzer mcp: analyze_video and screen_video over stdio.
 import { join, resolve } from "node:path";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
-import { breakdown } from "./pipeline/analyze.js";
-import { writeBreakdown } from "./pipeline/files.js";
+import { analyzeWithFrames } from "./pipeline/analyze.js";
+import { writeOutput } from "./pipeline/files.js";
 import { screenVideo } from "./pipeline/screen.js";
 import { summarize } from "./pipeline/summary.js";
 import type { Options } from "./types.js";
@@ -18,7 +18,7 @@ const error = (text: string): CallToolResult => ({ content: [{ type: "text", tex
 
 /** The MCP server. `options` go to every analysis (tests pass a fake fetch and a key); `outDir` is where folders go. */
 export function createServer(options: Options & { outDir?: string; version?: string } = {}): McpServer {
-  const server = new McpServer({ name: "shortform-breakdown", version: options.version ?? "0.0.0" });
+  const server = new McpServer({ name: "shortform-analyzer", version: options.version ?? "0.0.0" });
 
   server.registerTool("analyze_video", {
     title: "Analyze a short-form video",
@@ -30,12 +30,12 @@ export function createServer(options: Options & { outDir?: string; version?: str
       questions: z.array(question).max(20).optional().describe("Up to 20 yes/no questions; each answer is a probability"),
     },
   }, async ({ input, questions }) => {
-    const r = await breakdown(input, { ...options, questions });
+    const r = await analyzeWithFrames(input, { ...options, questions });
     if (!r.ok) return error(r.error);
     const dir = options.outDir
-      ? join(options.outDir, `video-${Date.now()}.breakdown`)
-      : resolve(`${input}.breakdown`);
-    await writeBreakdown(dir, r.analysis, r.frames, options);
+      ? join(options.outDir, `video-${Date.now()}.analysis`)
+      : resolve(`${input}.analysis`);
+    await writeOutput(dir, r.analysis, r.frames, options);
     // Thumbnails are base64 and would only fill the model's context; the frames are in the folder.
     const lean = { ...r.analysis, scenes: r.analysis.scenes.map(({ thumbnail: _t, ...s }) => s) };
     return { content: [{ type: "text", text: `${summarize(r.analysis)}\n\nFolder: ${dir} (open sheet.jpg to see every frame)\n\n${JSON.stringify(lean)}` }] };
@@ -61,5 +61,5 @@ export async function runStdio(): Promise<void> {
   const { StdioServerTransport } = await import("@modelcontextprotocol/sdk/server/stdio.js");
   const { VERSION } = await import("./version.js");
   await createServer({ version: VERSION }).connect(new StdioServerTransport());
-  if (!process.env.OPENAI_API_KEY) console.error("shortform-breakdown mcp: OPENAI_API_KEY is not set; every call will fail until it is.");
+  if (!process.env.OPENAI_API_KEY) console.error("shortform-analyzer mcp: OPENAI_API_KEY is not set; every call will fail until it is.");
 }

@@ -87,7 +87,7 @@ sells 0, production `mixed`, voice `none`, a question 0.5. `textOnScreen` is lef
 ## Output
 
 `analyzeVideo(input)` returns the `Analysis` described in [reference.md](reference.md#output)
-and in `schema/analysis.schema.json`. `npx shortform-breakdown analyze <video>` writes
+and in `schema/analysis.schema.json`. `npx shortform-analyzer analyze <video>` writes
 `analysis.json`, `report.html` (thumbnails, transcript and beats per scene), `frames/` and
-`sheet.jpg` into `<video>.breakdown/`. It needs `ffmpeg` and `ffprobe` on PATH and
+`sheet.jpg` into `<video>.analysis/`. It needs `ffmpeg` and `ffprobe` on PATH and
 `OPENAI_API_KEY`.

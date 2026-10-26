@@ -1,9 +1,9 @@
 ---
-name: shortform-breakdown
+name: shortform-analyzer
 description: Break down a short-form video (TikTok, Reels, Shorts) scene by scene - what is said and shown, which beat each scene plays (hook, setup, value, proof, payoff, cta), what keeps viewers watching and how strongly, and the video's format. Use when someone wants to know why a short video works, or how to borrow its structure for their own.
 ---
 
-# Short-form breakdown
+# shortform-analyzer
 
 ## When to use it
 
@@ -14,9 +14,9 @@ yes/no questions ("is a face on camera?", "is it a screen recording?").
 ## Run it
 
 ```bash
-npx shortform-breakdown analyze <file>
-npx shortform-breakdown analyze clip.mp4 --question face="Is a person's face on camera at any point?"
-npx shortform-breakdown screen clip.mp4 --question face="Is a person's face on camera?"   # 3 frames, one request
+npx shortform-analyzer analyze <file>
+npx shortform-analyzer analyze clip.mp4 --question face="Is a person's face on camera at any point?"
+npx shortform-analyzer screen clip.mp4 --question face="Is a person's face on camera?"   # 3 frames, one request
 ```
 
 Needs `ffmpeg` and `ffprobe` on PATH and `OPENAI_API_KEY`. It takes a video file, not a URL:
@@ -24,7 +24,7 @@ download the video first. It takes about 15 seconds.
 
 ## Read the result
 
-`analyze` prints a summary and writes `<file>.breakdown/`:
+`analyze` prints a summary and writes `<file>.analysis/`:
 
 - the first line: format, goal (conversion or awareness), length, scene count, how it is made;
 - then one line per section: its beat, time, lever and what is said, e.g.
@@ -41,7 +41,7 @@ the video says.
 ## What the labels mean
 
 Beats, levers, hold, formats, production and voice are defined in
-[docs/video-analysis.md](https://github.com/trevkang/shortform-breakdown/blob/main/docs/video-analysis.md).
+[docs/video-analysis.md](https://github.com/trevkang/shortform-analyzer/blob/main/docs/video-analysis.md).
 Labels are the model's best guess with probabilities; say so when one is below 0.5.
 
 ## Keys and costs

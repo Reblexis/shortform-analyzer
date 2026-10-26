@@ -1,9 +1,9 @@
-# shortform-breakdown
+# shortform-analyzer
 
 Break a short-form video into scenes: what is said and shown in each one, which beat it plays (hook, setup, value, proof, payoff, cta), what keeps the viewer watching and how strongly, and the video's format. One line in Node, a CLI, an MCP server and an agent skill.
 
 ```ts
-import { analyzeVideo, summarize } from "shortform-breakdown";
+import { analyzeVideo, summarize } from "shortform-analyzer";
 
 const a = await analyzeVideo("clip.mp4");
 if (a.ok) console.log(summarize(a));
@@ -16,7 +16,7 @@ if (a.ok) console.log(summarize(a));
 
 ## How it works
 
-<p align="center"><img src="https://raw.githubusercontent.com/trevkang/shortform-breakdown/main/docs/media/how-it-works.gif" width="100%" alt="A real TikTok (Zach King, a message to all AI, 27.9 s) plays while detectScenes cuts its timeline into 17 scenes. Then one Decisions request labels every scene at once: a beat (hook, setup, value, payoff, cta), a hold score, and the sections. The video is a skit, awareness, made as on camera person. Last, the playhead runs over the timeline again and shows each scene with its labels and words."></p>
+<p align="center"><img src="https://raw.githubusercontent.com/trevkang/shortform-analyzer/main/docs/media/how-it-works.gif" width="100%" alt="A real TikTok (Zach King, a message to all AI, 27.9 s) plays while detectScenes cuts its timeline into 17 scenes. Then one Decisions request labels every scene at once: a beat (hook, setup, value, payoff, cta), a hold score, and the sections. The video is a skit, awareness, made as on camera person. Last, the playhead runs over the timeline again and shows each scene with its labels and words."></p>
 
 <p align="center"><a href="docs/media/how-it-works.mp4">MP4</a> · Every time, word and label on screen is a real run of <code>analyzeVideo</code> on <a href="https://www.tiktok.com/@zachking/video/7655004069190192398">Zach King's “a message to all AI”</a> (the video is his).</p>
 
@@ -43,7 +43,7 @@ video ─ probe ─ detectScenes                                 ├─ sceneEvi
 ## Install
 
 ```bash
-npm install shortform-breakdown
+npm install shortform-analyzer
 ```
 
 Node 20 or later. `ffmpeg` and `ffprobe` on PATH (`brew install ffmpeg`, `apt install ffmpeg`), or pass `ffmpegPath` and `ffprobePath`. An OpenAI key in `OPENAI_API_KEY`.
@@ -52,7 +52,7 @@ Node 20 or later. `ffmpeg` and `ffprobe` on PATH (`brew install ffmpeg`, `apt in
 
 ```ts
 import { writeFile } from "node:fs/promises";
-import { analyzeVideo, reportHtml, summarize } from "shortform-breakdown";
+import { analyzeVideo, reportHtml, summarize } from "shortform-analyzer";
 
 const a = await analyzeVideo("clip.mp4", {
   questions: [{ name: "face_on_camera", question: "Is a person's face on camera at any point?" }],
@@ -82,12 +82,12 @@ The output's fields are in [docs/reference.md](docs/reference.md#output) and in 
 ## CLI
 
 ```bash
-npx shortform-breakdown analyze clip.mp4
-npx shortform-breakdown analyze clip.mp4 --question face="Is a person's face on camera?" --json
-npx shortform-breakdown screen clip.mp4 --question face="Is a person's face on camera?"
+npx shortform-analyzer analyze clip.mp4
+npx shortform-analyzer analyze clip.mp4 --question face="Is a person's face on camera?" --json
+npx shortform-analyzer screen clip.mp4 --question face="Is a person's face on camera?"
 ```
 
-`analyze` prints the summary (or the JSON with `--json`) and writes `<file>.breakdown/`:
+`analyze` prints the summary (or the JSON with `--json`) and writes `<file>.analysis/`:
 
 - `analysis.json`, `report.html`;
 - `frames/01.jpg`…: the 512 px frames the model saw;
@@ -100,7 +100,7 @@ Exit codes: 0 ok, 1 the analysis failed (the reason is on stderr), 2 a usage err
 Claude Code:
 
 ```bash
-claude mcp add shortform-breakdown -e OPENAI_API_KEY=sk-... -- npx -y shortform-breakdown mcp
+claude mcp add shortform-analyzer -e OPENAI_API_KEY=sk-... -- npx -y shortform-analyzer mcp
 ```
 
 Claude Desktop, Cursor and other clients:
@@ -108,9 +108,9 @@ Claude Desktop, Cursor and other clients:
 ```json
 {
   "mcpServers": {
-    "shortform-breakdown": {
+    "shortform-analyzer": {
       "command": "npx",
-      "args": ["-y", "shortform-breakdown", "mcp"],
+      "args": ["-y", "shortform-analyzer", "mcp"],
       "env": { "OPENAI_API_KEY": "sk-..." }
     }
   }
@@ -124,20 +124,20 @@ Claude Desktop, Cursor and other clients:
 
 ## Agent skill
 
-[`skills/shortform-breakdown/SKILL.md`](skills/shortform-breakdown/SKILL.md) teaches an agent when to run it and how to read the result. It ships in the npm package too.
+[`skills/shortform-analyzer/SKILL.md`](skills/shortform-analyzer/SKILL.md) teaches an agent when to run it and how to read the result. It ships in the npm package too.
 
 ```bash
-npx skills add trevkang/shortform-breakdown
+npx skills add trevkang/shortform-analyzer
 ```
 
 ## Building blocks
 
-Every step is public from `shortform-breakdown/primitives`. This subpath is **experimental**: a minor version may change a signature, and every change is in [CHANGELOG.md](CHANGELOG.md). The layers are explained in [docs/concepts.md](docs/concepts.md).
+Every step is public from `shortform-analyzer/primitives`. This subpath is **experimental**: a minor version may change a signature, and every change is in [CHANGELOG.md](CHANGELOG.md). The layers are explained in [docs/concepts.md](docs/concepts.md).
 
 Scenes and the words said in each, with no model call:
 
 ```ts
-import { probe, detectScenes, extractAudio, transcribe, alignWords } from "shortform-breakdown/primitives";
+import { probe, detectScenes, extractAudio, transcribe, alignWords } from "shortform-analyzer/primitives";
 
 const { duration } = await probe("talk.mp4");
 const spans = await detectScenes("talk.mp4", { duration, maxTake: 30 });
@@ -148,7 +148,7 @@ const texts = alignWords(words, spans);
 The short-form preset plus a question of your own, asked of every scene:
 
 ```ts
-import { decide, extractFrames, parseShortform, sceneEvidence, shortformQuestions, type DecisionQuestion } from "shortform-breakdown/primitives";
+import { decide, extractFrames, parseShortform, sceneEvidence, shortformQuestions, type DecisionQuestion } from "shortform-analyzer/primitives";
 
 const frames = await extractFrames("clip.mp4", spans);
 const questions: DecisionQuestion[] = [

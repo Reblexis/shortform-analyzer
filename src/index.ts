@@ -1,4 +1,4 @@
-// shortform-breakdown: Layer 3 and the label sets (stable). Building blocks: shortform-breakdown/primitives.
+// shortform-analyzer: Layer 3 and the label sets (stable). Building blocks: shortform-analyzer/primitives.
 export { analyzeVideo } from "./pipeline/analyze.js";
 export { screenCover, screenVideo, SCREEN_AT } from "./pipeline/screen.js";
 export { reportHtml } from "./pipeline/report.js";

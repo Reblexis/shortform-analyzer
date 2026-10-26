@@ -49,7 +49,7 @@ describe("cli", () => {
     expect((await cli(["screen", "x.mp4"])).stderr).toMatch(/at least one --question/);
     const help = await cli(["--help"]);
     expect(help.code).toBe(0);
-    expect(help.stdout).toMatch(/shortform-breakdown analyze/);
+    expect(help.stdout).toMatch(/shortform-analyzer analyze/);
     expect((await cli(["--version"])).stdout.trim()).toMatch(/^\d+\.\d+\.\d+/);
   });
 
@@ -67,7 +67,7 @@ describe("cli", () => {
     expect(r.code).toBe(0);
     expect(r.stdout).toMatch(/^meme, awareness, 5 s, 3 scenes/);
     expect(r.stdout).toMatch(/hook 0\.0-1\.5 s \(curiosity\): "Wait"/);
-    const dir = `${video}.breakdown`;
+    const dir = `${video}.analysis`;
     for (const f of ["analysis.json", "report.html", "frames/01.jpg", "frames/02.jpg", "frames/03.jpg", "sheet.jpg"]) expect(existsSync(join(dir, f)), f).toBe(true);
     const a = JSON.parse(readFileSync(join(dir, "analysis.json"), "utf8"));
     expect(a.answers).toEqual({ red: 0.9 });

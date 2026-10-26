@@ -15,7 +15,7 @@ docs disagree, the code is wrong. Keep doc edits short.
 - `src/pipeline/` is Layer 3. It imports only from `src/primitives.ts`, never from `blocks/` or
   `shortform/` directly, so `analyzeVideo` stays rebuildable from the public parts
   (`tests/compose.test.ts` checks both). It never throws: every failure is `{ ok: false, error }`.
-- `shortform-breakdown` (src/index.ts) is stable; `shortform-breakdown/primitives` is experimental.
+- `shortform-analyzer` (src/index.ts) is stable; `shortform-analyzer/primitives` is experimental.
   A change to a `primitives` signature goes in CHANGELOG.md.
 
 ## Tests

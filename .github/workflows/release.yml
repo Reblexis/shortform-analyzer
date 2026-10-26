@@ -25,5 +25,5 @@ jobs:
       - name: Publish unless this version is already on npm (0.1.0 was published by hand)
         run: |
           v=$(node -p 'require("./package.json").version')
-          if npm view "shortform-breakdown@$v" version >/dev/null 2>&1; then echo "shortform-breakdown@$v is already published"; exit 0; fi
+          if npm view "shortform-analyzer@$v" version >/dev/null 2>&1; then echo "shortform-analyzer@$v is already published"; exit 0; fi
           npm publish --provenance --access public

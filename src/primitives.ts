@@ -1,4 +1,4 @@
-// shortform-breakdown/primitives: Layers 1 and 2 (docs/concepts.md). Experimental: a minor version may change these.
+// shortform-analyzer/primitives: Layers 1 and 2 (docs/concepts.md). Experimental: a minor version may change these.
 
 // Layer 1 · building blocks
 export { resolveInput, type ResolvedInput } from "./blocks/input.js";

@@ -1,5 +1,5 @@
-import { analyzeVideo, type Analysis, type Beat, type Question } from "shortform-breakdown";
-import { decide, sceneEvidence, shortformQuestions, type DecisionQuestion, type Decisions, type Span } from "shortform-breakdown/primitives";
+import { analyzeVideo, type Analysis, type Beat, type Question } from "shortform-analyzer";
+import { decide, sceneEvidence, shortformQuestions, type DecisionQuestion, type Decisions, type Span } from "shortform-analyzer/primitives";
 
 const q: Question[] = [{ name: "face", question: "Is a face on camera?" }];
 const qs: DecisionQuestion[] = [...shortformQuestions({ questions: q }), { type: "predicate", name: "logo", scope: "scene", instructions: "Logo in scene {scene}?" }];
